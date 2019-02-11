@@ -24,11 +24,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        // Load core data.
-        dataController = DataController(modelName: "Virtual_Tourist")
-        dataController.load { description, error in
-            print("Stack loaded =D.")
+        // Inject the initial dependencies of the app.
+        guard let splashController = window?.rootViewController as? SplashViewController else {
+            preconditionFailure("Couldn't get the initial app controller.")
         }
+
+        dataController = DataController(modelName: "Virtual_Tourist")
+        splashController.dataController = dataController
 
         return true
     }

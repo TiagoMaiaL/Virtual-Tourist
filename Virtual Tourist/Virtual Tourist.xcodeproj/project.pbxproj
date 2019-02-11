@@ -20,6 +20,8 @@
 		470CE5D422122D47005E321F /* PinMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5D322122D47005E321F /* PinMO.swift */; };
 		470CE5D622122D52005E321F /* PhotoMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5D522122D52005E321F /* PhotoMO.swift */; };
 		470CE5D822122DA4005E321F /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5D722122DA4005E321F /* DataController.swift */; };
+		470CE5DB221235B1005E321F /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5DA221235B1005E321F /* SplashViewController.swift */; };
+		470CE5DD221237F6005E321F /* UIViewController+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5DC221237F6005E321F /* UIViewController+Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,8 @@
 		470CE5D322122D47005E321F /* PinMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinMO.swift; sourceTree = "<group>"; };
 		470CE5D522122D52005E321F /* PhotoMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMO.swift; sourceTree = "<group>"; };
 		470CE5D722122DA4005E321F /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		470CE5DA221235B1005E321F /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		470CE5DC221237F6005E321F /* UIViewController+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Constants.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +132,8 @@
 			children = (
 				470CE5CF2212297D005E321F /* MapViewController.swift */,
 				470CE5D122122999005E321F /* PhotoAlbumCollectionViewController.swift */,
+				470CE5DA221235B1005E321F /* SplashViewController.swift */,
+				470CE5DC221237F6005E321F /* UIViewController+Constants.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -280,9 +286,11 @@
 				470CE5D622122D52005E321F /* PhotoMO.swift in Sources */,
 				470CE5D422122D47005E321F /* PinMO.swift in Sources */,
 				470CE5AB221222BA005E321F /* Virtual_Tourist.xcdatamodeld in Sources */,
+				470CE5DD221237F6005E321F /* UIViewController+Constants.swift in Sources */,
 				470CE5D222122999005E321F /* PhotoAlbumCollectionViewController.swift in Sources */,
 				470CE5D02212297D005E321F /* MapViewController.swift in Sources */,
 				470CE5A3221222BA005E321F /* AppDelegate.swift in Sources */,
+				470CE5DB221235B1005E321F /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

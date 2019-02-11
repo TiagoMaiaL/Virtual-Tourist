@@ -8,11 +8,15 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 /// The view controller showing the pins entered by the user in a map.
 class MapViewController: UIViewController {
 
     // MARK: Properties
+
+    /// The data controller of the app.
+    var dataController: DataController!
 
     /// The main map view.
     @IBOutlet weak var mapView: MKMapView!
@@ -21,6 +25,14 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        precondition(dataController != nil)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // Make the fetch for pins and add them to the map.
     }
 
     // MARK: Navigation
