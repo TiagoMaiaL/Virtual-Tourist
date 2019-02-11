@@ -79,13 +79,12 @@
 		470CE5A1221222BA005E321F /* Virtual Tourist */ = {
 			isa = PBXGroup;
 			children = (
-				470CE5A2221222BA005E321F /* AppDelegate.swift */,
-				470CE5A4221222BA005E321F /* ViewController.swift */,
-				470CE5A6221222BA005E321F /* Main.storyboard */,
-				470CE5AC221222BE005E321F /* Assets.xcassets */,
-				470CE5AE221222BE005E321F /* LaunchScreen.storyboard */,
+				470CE5C92212265B005E321F /* Model */,
+				470CE5C822122646005E321F /* Views */,
+				470CE5C622122635005E321F /* Controllers */,
+				470CE5C72212263C005E321F /* Services */,
+				470CE5C522122612005E321F /* Supporting Files */,
 				470CE5B1221222BE005E321F /* Info.plist */,
-				470CE5A9221222BA005E321F /* Virtual_Tourist.xcdatamodeld */,
 			);
 			path = "Virtual Tourist";
 			sourceTree = "<group>";
@@ -97,6 +96,47 @@
 				470CE5BC221222BE005E321F /* Info.plist */,
 			);
 			path = "Virtual TouristTests";
+			sourceTree = "<group>";
+		};
+		470CE5C522122612005E321F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5AC221222BE005E321F /* Assets.xcassets */,
+				470CE5AE221222BE005E321F /* LaunchScreen.storyboard */,
+				470CE5A2221222BA005E321F /* AppDelegate.swift */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		470CE5C622122635005E321F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5A4221222BA005E321F /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		470CE5C72212263C005E321F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		470CE5C822122646005E321F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5A6221222BA005E321F /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		470CE5C92212265B005E321F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5A9221222BA005E321F /* Virtual_Tourist.xcdatamodeld */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
