@@ -17,6 +17,9 @@
 		470CE5CE22122744005E321F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470CE5CD22122744005E321F /* CoreData.framework */; };
 		470CE5D02212297D005E321F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5CF2212297D005E321F /* MapViewController.swift */; };
 		470CE5D222122999005E321F /* PhotoAlbumCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5D122122999005E321F /* PhotoAlbumCollectionViewController.swift */; };
+		470CE5D422122D47005E321F /* PinMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5D322122D47005E321F /* PinMO.swift */; };
+		470CE5D622122D52005E321F /* PhotoMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5D522122D52005E321F /* PhotoMO.swift */; };
+		470CE5D822122DA4005E321F /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5D722122DA4005E321F /* DataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		470CE5CD22122744005E321F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		470CE5CF2212297D005E321F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		470CE5D122122999005E321F /* PhotoAlbumCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewController.swift; sourceTree = "<group>"; };
+		470CE5D322122D47005E321F /* PinMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinMO.swift; sourceTree = "<group>"; };
+		470CE5D522122D52005E321F /* PhotoMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMO.swift; sourceTree = "<group>"; };
+		470CE5D722122DA4005E321F /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +150,9 @@
 		470CE5C92212265B005E321F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				470CE5D722122DA4005E321F /* DataController.swift */,
 				470CE5A9221222BA005E321F /* Virtual_Tourist.xcdatamodeld */,
+				470CE5D922123367005E321F /* Managed Objects */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -156,6 +164,15 @@
 				470CE5CB2212273C005E321F /* MapKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		470CE5D922123367005E321F /* Managed Objects */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5D322122D47005E321F /* PinMO.swift */,
+				470CE5D522122D52005E321F /* PhotoMO.swift */,
+			);
+			path = "Managed Objects";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +276,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				470CE5D822122DA4005E321F /* DataController.swift in Sources */,
+				470CE5D622122D52005E321F /* PhotoMO.swift in Sources */,
+				470CE5D422122D47005E321F /* PinMO.swift in Sources */,
 				470CE5AB221222BA005E321F /* Virtual_Tourist.xcdatamodeld in Sources */,
 				470CE5D222122999005E321F /* PhotoAlbumCollectionViewController.swift in Sources */,
 				470CE5D02212297D005E321F /* MapViewController.swift in Sources */,
