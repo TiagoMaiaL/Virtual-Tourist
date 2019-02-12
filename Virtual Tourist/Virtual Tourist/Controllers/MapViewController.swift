@@ -33,6 +33,22 @@ class MapViewController: UIViewController {
         super.viewDidAppear(animated)
 
         // Make the fetch for pins and add them to the map.
+        let pinsRequest: NSFetchRequest<PinMO> = PinMO.fetchRequest()
+        pinsRequest.sortDescriptors = [
+            NSSortDescriptor(key: "creationDate", ascending: false)
+        ]
+
+        dataController.viewContext.perform {
+            // TODO: Display any errors back to the user.
+            if let pins = try? self.dataController.viewContext.fetch(pinsRequest) {
+                self.mapView.addAnnotations(pins.map {
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
+
+                    return annotation
+                })
+            }
+        }
     }
 
     // MARK: Navigation
