@@ -22,6 +22,11 @@
 		470CE5D822122DA4005E321F /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5D722122DA4005E321F /* DataController.swift */; };
 		470CE5DB221235B1005E321F /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5DA221235B1005E321F /* SplashViewController.swift */; };
 		470CE5DD221237F6005E321F /* UIViewController+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5DC221237F6005E321F /* UIViewController+Constants.swift */; };
+		470CE5E422137D28005E321F /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5E322137D28005E321F /* APIClient.swift */; };
+		470CE5E622137E39005E321F /* APIClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5E522137E39005E321F /* APIClientProtocol.swift */; };
+		470CE5E822137ECE005E321F /* FlickrService+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5E722137ECE005E321F /* FlickrService+Constants.swift */; };
+		470CE5EA22137EE2005E321F /* FlickrServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5E922137EE2005E321F /* FlickrServiceProtocol.swift */; };
+		470CE5EC22137EED005E321F /* FlickrService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5EB22137EED005E321F /* FlickrService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +59,13 @@
 		470CE5D722122DA4005E321F /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		470CE5DA221235B1005E321F /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		470CE5DC221237F6005E321F /* UIViewController+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Constants.swift"; sourceTree = "<group>"; };
+		470CE5E122137415005E321F /* keys.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = keys.example.xcconfig; sourceTree = "<group>"; };
+		470CE5E2221375D1005E321F /* keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = keys.xcconfig; sourceTree = "<group>"; };
+		470CE5E322137D28005E321F /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		470CE5E522137E39005E321F /* APIClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientProtocol.swift; sourceTree = "<group>"; };
+		470CE5E722137ECE005E321F /* FlickrService+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlickrService+Constants.swift"; sourceTree = "<group>"; };
+		470CE5E922137EE2005E321F /* FlickrServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrServiceProtocol.swift; sourceTree = "<group>"; };
+		470CE5EB22137EED005E321F /* FlickrService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +132,7 @@
 		470CE5C522122612005E321F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				470CE5E022137296005E321F /* Secrets */,
 				470CE5AC221222BE005E321F /* Assets.xcassets */,
 				470CE5AE221222BE005E321F /* LaunchScreen.storyboard */,
 				470CE5A2221222BA005E321F /* AppDelegate.swift */,
@@ -141,6 +154,8 @@
 		470CE5C72212263C005E321F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				470CE5ED22137EFA005E321F /* APIClient */,
+				470CE5EE22137F03005E321F /* FlickrService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -179,6 +194,34 @@
 				470CE5D522122D52005E321F /* PhotoMO.swift */,
 			);
 			path = "Managed Objects";
+			sourceTree = "<group>";
+		};
+		470CE5E022137296005E321F /* Secrets */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5E122137415005E321F /* keys.example.xcconfig */,
+				470CE5E2221375D1005E321F /* keys.xcconfig */,
+			);
+			path = Secrets;
+			sourceTree = "<group>";
+		};
+		470CE5ED22137EFA005E321F /* APIClient */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5E322137D28005E321F /* APIClient.swift */,
+				470CE5E522137E39005E321F /* APIClientProtocol.swift */,
+			);
+			path = APIClient;
+			sourceTree = "<group>";
+		};
+		470CE5EE22137F03005E321F /* FlickrService */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5E922137EE2005E321F /* FlickrServiceProtocol.swift */,
+				470CE5EB22137EED005E321F /* FlickrService.swift */,
+				470CE5E722137ECE005E321F /* FlickrService+Constants.swift */,
+			);
+			path = FlickrService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,13 +327,18 @@
 			files = (
 				470CE5D822122DA4005E321F /* DataController.swift in Sources */,
 				470CE5D622122D52005E321F /* PhotoMO.swift in Sources */,
+				470CE5E422137D28005E321F /* APIClient.swift in Sources */,
 				470CE5D422122D47005E321F /* PinMO.swift in Sources */,
+				470CE5E822137ECE005E321F /* FlickrService+Constants.swift in Sources */,
 				470CE5AB221222BA005E321F /* Virtual_Tourist.xcdatamodeld in Sources */,
 				470CE5DD221237F6005E321F /* UIViewController+Constants.swift in Sources */,
 				470CE5D222122999005E321F /* PhotoAlbumCollectionViewController.swift in Sources */,
+				470CE5EC22137EED005E321F /* FlickrService.swift in Sources */,
+				470CE5E622137E39005E321F /* APIClientProtocol.swift in Sources */,
 				470CE5D02212297D005E321F /* MapViewController.swift in Sources */,
 				470CE5A3221222BA005E321F /* AppDelegate.swift in Sources */,
 				470CE5DB221235B1005E321F /* SplashViewController.swift in Sources */,
+				470CE5EA22137EE2005E321F /* FlickrServiceProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +498,7 @@
 		};
 		470CE5C0221222BE005E321F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 470CE5E2221375D1005E321F /* keys.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -469,6 +518,7 @@
 		};
 		470CE5C1221222BE005E321F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 470CE5E2221375D1005E321F /* keys.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

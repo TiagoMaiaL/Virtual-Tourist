@@ -22,8 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: App life cycle
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+        ) -> Bool {
         // Inject the initial dependencies of the app.
         guard let splashController = window?.rootViewController as? SplashViewController else {
             preconditionFailure("Couldn't get the initial app controller.")
