@@ -44,6 +44,37 @@ class MapViewController: UIViewController {
     // MARK: Actions
 
     @IBAction func addPin(_ sender: UILongPressGestureRecognizer) {
-        // TODO: Add the pin to the map and persist it.
+        switch sender.state {
+        case .began:
+            let pressMapCoordinate = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+            createPin(forCoordinate: pressMapCoordinate)
+        default:
+            break
+        }
+    }
+
+    // MARK: Imperatives
+
+    /// Creates a new pin and persists it using the passed coordinate.
+    /// - Parameter coordinate: the coordinate location of the user's press gesture.
+    private func createPin(forCoordinate coordinate: CLLocationCoordinate2D) {
+        // Geocode the coordinate to get more details of the location.
+        let geocoder = CLGeocoder()
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            self.dataController.persistentContainer.performBackgroundTask { context in
+                let pin = PinMO(context: context)
+                pin.latitude = coordinate.latitude
+                pin.longitude = coordinate.longitude
+
+                if let placemark = placemarks?.first,
+                    let administrativeArea = placemark.administrativeArea,
+                    let locality = placemark.locality {
+                    pin.placeName = "\(locality), \(administrativeArea)"
+                }
+
+                try? context.save()
+            }
+        }
     }
 }
