@@ -12,4 +12,12 @@ import CoreData
 /// The managed object representing a pin.
 class PinMO: NSManagedObject {
 
+    // MARK: Life cycle
+
+    override func awakeFromInsert() {
+        super.awakeFromInsert()
+
+        creationDate = Date()
+    }
+
 }
