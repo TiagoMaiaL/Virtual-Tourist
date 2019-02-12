@@ -12,4 +12,11 @@ import CoreData
 /// The managed object representing a photo associated to a pin.
 class PhotoMO: NSManagedObject {
 
+    // MARK: Life cycle
+
+    override func awakeFromInsert() {
+        super.awakeFromInsert()
+
+        creationDate = Date()
+    }
 }

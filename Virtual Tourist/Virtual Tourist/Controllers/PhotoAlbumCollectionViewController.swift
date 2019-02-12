@@ -7,21 +7,33 @@
 //
 
 import UIKit
+import CoreData
 
-private let reuseIdentifier = "Cell"
-
+/// The controller in charge of presenting the photo album with images from Flickr.
 class PhotoAlbumCollectionViewController: UICollectionViewController {
+
+    // MARK: Properties
+
+    /// The reuse identifier of the collection cells.
+    private let reuseIdentifier = "Cell"
+
+    /// The pin object associated with the album.
+    var pin: PinMO!
+
+    /// The fetched results controller in charge of populating the collection view.
+    var photosFetchedResultsController: NSFetchedResultsController<PhotoMO>!
+
+    // MARK: Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        precondition(pin != nil)
+        precondition(photosFetchedResultsController != nil)
 
-        // Register cell classes
+        title = pin.placeName
+
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
     }
 
     /*
@@ -85,5 +97,4 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
     
     }
     */
-
 }

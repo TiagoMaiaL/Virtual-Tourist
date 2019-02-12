@@ -27,6 +27,8 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
 
         precondition(dataController != nil)
+
+        mapView.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -37,7 +39,28 @@ class MapViewController: UIViewController {
     // MARK: Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // TODO: Inject the main dependencies.
+        if segue.identifier == SegueIdentifiers.ShowPhotoAlbum {
+            guard let selectedPinAnnotation = mapView.selectedAnnotations.first as? PinAnnotation,
+                let albumController = segue.destination as? PhotoAlbumCollectionViewController else {
+                    assertionFailure("Couldn't prepare the album controller.")
+                    return
+            }
+            let selectedPin = selectedPinAnnotation.pin
+
+            let photosRequest: NSFetchRequest<PhotoMO> = PhotoMO.fetchRequest()
+            photosRequest.predicate = NSPredicate(format: "pin = %@", selectedPin)
+            photosRequest.sortDescriptors = [
+                NSSortDescriptor(key: "creationDate", ascending: false)
+            ]
+
+            albumController.photosFetchedResultsController = NSFetchedResultsController<PhotoMO>(
+                fetchRequest: photosRequest,
+                managedObjectContext: dataController.viewContext,
+                sectionNameKeyPath: nil,
+                cacheName: selectedPin.placeName
+            )
+            albumController.pin = selectedPin
+        }
     }
 
     // MARK: Actions
@@ -101,13 +124,7 @@ class MapViewController: UIViewController {
         dataController.viewContext.perform {
             // TODO: Display any errors back to the user.
             if let pins = try? self.dataController.viewContext.fetch(pinsRequest) {
-                self.mapView.addAnnotations(pins.map {
-                    let annotation = MKPointAnnotation()
-                    // TODO: Is it a good idea to store the coordinates directly? As a Transformable property?
-                    annotation.coordinate = CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
-
-                    return annotation
-                })
+                self.mapView.addAnnotations(pins.map { PinAnnotation(pin: $0) })
             }
         }
     }
@@ -115,9 +132,7 @@ class MapViewController: UIViewController {
     /// Adds a recently created Pin instance to the map.
     /// - Parameter createdPin: the pin recently created by the user.
     private func display(createdPin pin: PinMO) {
-        let pinAnnotation = MKPointAnnotation()
-        pinAnnotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
-        mapView.addAnnotation(pinAnnotation)
+        mapView.addAnnotation(PinAnnotation(pin: pin))
     }
 }
 
@@ -126,5 +141,37 @@ extension MKMapView {
     /// Removes all currently handled annotations.
     fileprivate func removeAllAnnotations() {
         removeAnnotations(annotations)
+    }
+}
+
+private class PinAnnotation: MKPointAnnotation {
+
+    // MARK: Properties
+
+    /// The associated pin managed object.
+    var pin: PinMO
+
+    // MARK: Initializers
+
+    init(pin: PinMO) {
+        self.pin = pin
+
+        super.init()
+
+        // TODO: Is it a good idea to store the coordinates directly? As a Transformable property?
+        self.coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+
+    // MARK: MKMapViewDelegate methods
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard view.annotation is PinAnnotation else {
+            return
+        }
+
+        performSegue(withIdentifier: SegueIdentifiers.ShowPhotoAlbum, sender: self)
     }
 }

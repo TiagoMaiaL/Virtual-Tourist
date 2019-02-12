@@ -19,5 +19,4 @@ class PinMO: NSManagedObject {
 
         creationDate = Date()
     }
-
 }
