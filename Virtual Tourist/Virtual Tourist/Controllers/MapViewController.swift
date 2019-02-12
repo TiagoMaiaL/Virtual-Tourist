@@ -31,24 +31,7 @@ class MapViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        // Make the fetch for pins and add them to the map.
-        let pinsRequest: NSFetchRequest<PinMO> = PinMO.fetchRequest()
-        pinsRequest.sortDescriptors = [
-            NSSortDescriptor(key: "creationDate", ascending: false)
-        ]
-
-        dataController.viewContext.perform {
-            // TODO: Display any errors back to the user.
-            if let pins = try? self.dataController.viewContext.fetch(pinsRequest) {
-                self.mapView.addAnnotations(pins.map {
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
-
-                    return annotation
-                })
-            }
-        }
+        displayPins()
     }
 
     // MARK: Navigation
@@ -89,8 +72,59 @@ class MapViewController: UIViewController {
                     pin.placeName = "\(locality), \(administrativeArea)"
                 }
 
-                try? context.save()
+                do {
+                    try context.save()
+                    let pinID = pin.objectID
+                    self.dataController.viewContext.perform {
+                        guard let mainQueuePin = self.dataController.viewContext.object(with: pinID) as? PinMO else {
+                            preconditionFailure("The fetched object wasn't correctly found.")
+                        }
+                        self.display(createdPin: mainQueuePin)
+                    }
+                } catch {
+                    // TODO: Display the error back to the user.
+                }
             }
         }
+    }
+
+    /// Displays the persisted pins on the map.
+    private func displayPins() {
+        mapView.removeAllAnnotations()
+
+        // Make the fetch for pins and add them to the map.
+        let pinsRequest: NSFetchRequest<PinMO> = PinMO.fetchRequest()
+        pinsRequest.sortDescriptors = [
+            NSSortDescriptor(key: "creationDate", ascending: false)
+        ]
+
+        dataController.viewContext.perform {
+            // TODO: Display any errors back to the user.
+            if let pins = try? self.dataController.viewContext.fetch(pinsRequest) {
+                self.mapView.addAnnotations(pins.map {
+                    let annotation = MKPointAnnotation()
+                    // TODO: Is it a good idea to store the coordinates directly? As a Transformable property?
+                    annotation.coordinate = CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
+
+                    return annotation
+                })
+            }
+        }
+    }
+
+    /// Adds a recently created Pin instance to the map.
+    /// - Parameter createdPin: the pin recently created by the user.
+    private func display(createdPin pin: PinMO) {
+        let pinAnnotation = MKPointAnnotation()
+        pinAnnotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
+        mapView.addAnnotation(pinAnnotation)
+    }
+}
+
+extension MKMapView {
+
+    /// Removes all currently handled annotations.
+    fileprivate func removeAllAnnotations() {
+        removeAnnotations(annotations)
     }
 }
