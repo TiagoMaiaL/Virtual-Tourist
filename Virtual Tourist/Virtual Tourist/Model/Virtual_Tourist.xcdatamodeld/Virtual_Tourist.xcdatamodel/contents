@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AlbumMO" representedClassName=".AlbumMO" syncable="YES" codeGenerationType="category">
+        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="photos" toMany="YES" deletionRule="Cascade" destinationEntity="PhotoMO" inverseName="album" inverseEntity="PhotoMO" syncable="YES"/>
+        <relationship name="pin" maxCount="1" deletionRule="Nullify" destinationEntity="PinMO" inverseName="album" inverseEntity="PinMO" syncable="YES"/>
+    </entity>
     <entity name="PhotoMO" representedClassName=".PhotoMO" syncable="YES" codeGenerationType="category">
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="url" attributeType="URI" syncable="YES"/>
-        <relationship name="pin" maxCount="1" deletionRule="Nullify" destinationEntity="PinMO" inverseName="photos" inverseEntity="PinMO" syncable="YES"/>
+        <relationship name="album" maxCount="1" deletionRule="Nullify" destinationEntity="AlbumMO" inverseName="photos" inverseEntity="AlbumMO" syncable="YES"/>
     </entity>
     <entity name="PinMO" representedClassName=".PinMO" syncable="YES" codeGenerationType="category">
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="latitude" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitude" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="placeName" attributeType="String" syncable="YES"/>
-        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PhotoMO" inverseName="pin" inverseEntity="PhotoMO" syncable="YES"/>
+        <relationship name="album" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AlbumMO" inverseName="pin" inverseEntity="AlbumMO" syncable="YES"/>
     </entity>
     <elements>
         <element name="PinMO" positionX="-45" positionY="0" width="128" height="120"/>
         <element name="PhotoMO" positionX="-18" positionY="27" width="128" height="90"/>
+        <element name="AlbumMO" positionX="9" positionY="81" width="128" height="90"/>
     </elements>
 </model>

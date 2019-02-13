@@ -1,16 +1,16 @@
 //
-//  Photo.swift
+//  AlbumMO.swift
 //  Virtual Tourist
 //
-//  Created by Tiago Maia Lopes on 11/02/19.
+//  Created by Tiago Maia Lopes on 13/02/19.
 //  Copyright © 2019 Tiago Maia Lopes. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
-/// The managed object representing a photo associated to an album.
-class PhotoMO: NSManagedObject {
+/// The managed object representing an album associated to a pin.
+class AlbumMO: NSManagedObject {
 
     // MARK: Life cycle
 
@@ -20,3 +20,5 @@ class PhotoMO: NSManagedObject {
         creationDate = Date()
     }
 }
+
+

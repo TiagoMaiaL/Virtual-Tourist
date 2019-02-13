@@ -27,6 +27,7 @@
 		470CE5EA22137EE2005E321F /* FlickrServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5E922137EE2005E321F /* FlickrServiceProtocol.swift */; };
 		470CE5EC22137EED005E321F /* FlickrService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5EB22137EED005E321F /* FlickrService.swift */; };
 		470CE5F422143C8A005E321F /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5F322143C8A005E321F /* APIClientTests.swift */; };
+		470CE5F62214653D005E321F /* AlbumMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5F52214653D005E321F /* AlbumMO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		470CE5E922137EE2005E321F /* FlickrServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrServiceProtocol.swift; sourceTree = "<group>"; };
 		470CE5EB22137EED005E321F /* FlickrService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrService.swift; sourceTree = "<group>"; };
 		470CE5F322143C8A005E321F /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
+		470CE5F52214653D005E321F /* AlbumMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 			children = (
 				470CE5D322122D47005E321F /* PinMO.swift */,
 				470CE5D522122D52005E321F /* PhotoMO.swift */,
+				470CE5F52214653D005E321F /* AlbumMO.swift */,
 			);
 			path = "Managed Objects";
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				470CE5EC22137EED005E321F /* FlickrService.swift in Sources */,
 				470CE5E622137E39005E321F /* APIClientProtocol.swift in Sources */,
 				470CE5D02212297D005E321F /* MapViewController.swift in Sources */,
+				470CE5F62214653D005E321F /* AlbumMO.swift in Sources */,
 				470CE5A3221222BA005E321F /* AppDelegate.swift in Sources */,
 				470CE5DB221235B1005E321F /* SplashViewController.swift in Sources */,
 				470CE5EA22137EE2005E321F /* FlickrServiceProtocol.swift in Sources */,
