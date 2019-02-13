@@ -28,6 +28,12 @@
 		470CE5EC22137EED005E321F /* FlickrService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5EB22137EED005E321F /* FlickrService.swift */; };
 		470CE5F422143C8A005E321F /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5F322143C8A005E321F /* APIClientTests.swift */; };
 		470CE5F62214653D005E321F /* AlbumMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5F52214653D005E321F /* AlbumMO.swift */; };
+		470CE5FC22146646005E321F /* PinMOStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5FB22146646005E321F /* PinMOStoreProtocol.swift */; };
+		470CE5FE2214665A005E321F /* PinMOStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5FD2214665A005E321F /* PinMOStore.swift */; };
+		470CE60022146672005E321F /* PhotoMOStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5FF22146672005E321F /* PhotoMOStoreProtocol.swift */; };
+		470CE60222146684005E321F /* PhotoMOStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE60122146684005E321F /* PhotoMOStore.swift */; };
+		470CE604221466CD005E321F /* AlbumMOStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE603221466CD005E321F /* AlbumMOStoreProtocol.swift */; };
+		470CE606221466D8005E321F /* AlbumMOStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE605221466D8005E321F /* AlbumMOStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +74,12 @@
 		470CE5EB22137EED005E321F /* FlickrService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrService.swift; sourceTree = "<group>"; };
 		470CE5F322143C8A005E321F /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 		470CE5F52214653D005E321F /* AlbumMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMO.swift; sourceTree = "<group>"; };
+		470CE5FB22146646005E321F /* PinMOStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinMOStoreProtocol.swift; sourceTree = "<group>"; };
+		470CE5FD2214665A005E321F /* PinMOStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinMOStore.swift; sourceTree = "<group>"; };
+		470CE5FF22146672005E321F /* PhotoMOStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMOStoreProtocol.swift; sourceTree = "<group>"; };
+		470CE60122146684005E321F /* PhotoMOStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMOStore.swift; sourceTree = "<group>"; };
+		470CE603221466CD005E321F /* AlbumMOStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMOStoreProtocol.swift; sourceTree = "<group>"; };
+		470CE605221466D8005E321F /* AlbumMOStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMOStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,9 +204,9 @@
 		470CE5D922123367005E321F /* Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
-				470CE5D322122D47005E321F /* PinMO.swift */,
-				470CE5D522122D52005E321F /* PhotoMO.swift */,
-				470CE5F52214653D005E321F /* AlbumMO.swift */,
+				470CE5F82214660A005E321F /* PinMO */,
+				470CE5F922146612005E321F /* PhotoMO */,
+				470CE5FA22146621005E321F /* AlbumMO */,
 			);
 			path = "Managed Objects";
 			sourceTree = "<group>";
@@ -225,6 +237,36 @@
 				470CE5E722137ECE005E321F /* FlickrService+Constants.swift */,
 			);
 			path = FlickrService;
+			sourceTree = "<group>";
+		};
+		470CE5F82214660A005E321F /* PinMO */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5D322122D47005E321F /* PinMO.swift */,
+				470CE5FB22146646005E321F /* PinMOStoreProtocol.swift */,
+				470CE5FD2214665A005E321F /* PinMOStore.swift */,
+			);
+			path = PinMO;
+			sourceTree = "<group>";
+		};
+		470CE5F922146612005E321F /* PhotoMO */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5D522122D52005E321F /* PhotoMO.swift */,
+				470CE5FF22146672005E321F /* PhotoMOStoreProtocol.swift */,
+				470CE60122146684005E321F /* PhotoMOStore.swift */,
+			);
+			path = PhotoMO;
+			sourceTree = "<group>";
+		};
+		470CE5FA22146621005E321F /* AlbumMO */ = {
+			isa = PBXGroup;
+			children = (
+				470CE5F52214653D005E321F /* AlbumMO.swift */,
+				470CE603221466CD005E321F /* AlbumMOStoreProtocol.swift */,
+				470CE605221466D8005E321F /* AlbumMOStore.swift */,
+			);
+			path = AlbumMO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,7 +374,10 @@
 				470CE5D622122D52005E321F /* PhotoMO.swift in Sources */,
 				470CE5E422137D28005E321F /* APIClient.swift in Sources */,
 				470CE5D422122D47005E321F /* PinMO.swift in Sources */,
+				470CE606221466D8005E321F /* AlbumMOStore.swift in Sources */,
+				470CE60022146672005E321F /* PhotoMOStoreProtocol.swift in Sources */,
 				470CE5E822137ECE005E321F /* FlickrService+Constants.swift in Sources */,
+				470CE60222146684005E321F /* PhotoMOStore.swift in Sources */,
 				470CE5AB221222BA005E321F /* Virtual_Tourist.xcdatamodeld in Sources */,
 				470CE5DD221237F6005E321F /* UIViewController+Constants.swift in Sources */,
 				470CE5D222122999005E321F /* PhotoAlbumCollectionViewController.swift in Sources */,
@@ -342,7 +387,10 @@
 				470CE5F62214653D005E321F /* AlbumMO.swift in Sources */,
 				470CE5A3221222BA005E321F /* AppDelegate.swift in Sources */,
 				470CE5DB221235B1005E321F /* SplashViewController.swift in Sources */,
+				470CE5FE2214665A005E321F /* PinMOStore.swift in Sources */,
+				470CE604221466CD005E321F /* AlbumMOStoreProtocol.swift in Sources */,
 				470CE5EA22137EE2005E321F /* FlickrServiceProtocol.swift in Sources */,
+				470CE5FC22146646005E321F /* PinMOStoreProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
