@@ -8,5 +8,43 @@
 
 import Foundation
 
+extension URLSessionTask {
+
+    /// Describes the general kind of errors that might happen with a data task.
+    enum TaskError: Error {
+        case connection
+        case serverResponse
+    }
+}
+
 /// The protocol defining what an API client adopter should provide in its interface.
-protocol APIClientProtocol {}
+protocol APIClientProtocol {
+
+    // MARK: Types
+
+    /// A Data json object waiting to be deserialized.
+    typealias JsonData = Data
+
+    // MARK: Properties
+
+    /// The session used by the APIClientProtocol adopter to create the data tasks.
+    var session: URLSession { get }
+
+    // MARK: Initializers
+
+    init(session: URLSession)
+
+    // MARK: Imperatives
+
+    /// Creates and configures a data task for a GET HTTP method with the passed parameters.
+    /// - Parameters:
+    ///     - resourceUrl: the url of the desired resource.
+    ///     - parameters: the parameters to be passed with the request.
+    ///     - completionHandler: the completion handler called when the task finishes, with an error or the data.
+    /// - Returns: the configured and not resumed data task.
+    func makeGETDataTaskForResource(
+        withURL resourceURL: URL,
+        parameters: [String: String],
+        andCompletionHandler handler: @escaping (JsonData?, URLSessionTask.TaskError?) -> Void
+    ) -> URLSessionDataTask
+}

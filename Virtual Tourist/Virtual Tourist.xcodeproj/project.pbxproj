@@ -12,7 +12,6 @@
 		470CE5AB221222BA005E321F /* Virtual_Tourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5A9221222BA005E321F /* Virtual_Tourist.xcdatamodeld */; };
 		470CE5AD221222BE005E321F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 470CE5AC221222BE005E321F /* Assets.xcassets */; };
 		470CE5B0221222BE005E321F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 470CE5AE221222BE005E321F /* LaunchScreen.storyboard */; };
-		470CE5BB221222BE005E321F /* Virtual_TouristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5BA221222BE005E321F /* Virtual_TouristTests.swift */; };
 		470CE5CC2212273C005E321F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470CE5CB2212273C005E321F /* MapKit.framework */; };
 		470CE5CE22122744005E321F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470CE5CD22122744005E321F /* CoreData.framework */; };
 		470CE5D02212297D005E321F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5CF2212297D005E321F /* MapViewController.swift */; };
@@ -27,6 +26,7 @@
 		470CE5E822137ECE005E321F /* FlickrService+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5E722137ECE005E321F /* FlickrService+Constants.swift */; };
 		470CE5EA22137EE2005E321F /* FlickrServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5E922137EE2005E321F /* FlickrServiceProtocol.swift */; };
 		470CE5EC22137EED005E321F /* FlickrService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5EB22137EED005E321F /* FlickrService.swift */; };
+		470CE5F422143C8A005E321F /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE5F322143C8A005E321F /* APIClientTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +48,6 @@
 		470CE5AF221222BE005E321F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		470CE5B1221222BE005E321F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		470CE5B6221222BE005E321F /* Virtual TouristTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Virtual TouristTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		470CE5BA221222BE005E321F /* Virtual_TouristTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtual_TouristTests.swift; sourceTree = "<group>"; };
 		470CE5BC221222BE005E321F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		470CE5CB2212273C005E321F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		470CE5CD22122744005E321F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -66,6 +65,7 @@
 		470CE5E722137ECE005E321F /* FlickrService+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlickrService+Constants.swift"; sourceTree = "<group>"; };
 		470CE5E922137EE2005E321F /* FlickrServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrServiceProtocol.swift; sourceTree = "<group>"; };
 		470CE5EB22137EED005E321F /* FlickrService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrService.swift; sourceTree = "<group>"; };
+		470CE5F322143C8A005E321F /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,8 +123,8 @@
 		470CE5B9221222BE005E321F /* Virtual TouristTests */ = {
 			isa = PBXGroup;
 			children = (
-				470CE5BA221222BE005E321F /* Virtual_TouristTests.swift */,
 				470CE5BC221222BE005E321F /* Info.plist */,
+				470CE5F322143C8A005E321F /* APIClientTests.swift */,
 			);
 			path = "Virtual TouristTests";
 			sourceTree = "<group>";
@@ -346,7 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				470CE5BB221222BE005E321F /* Virtual_TouristTests.swift in Sources */,
+				470CE5F422143C8A005E321F /* APIClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
