@@ -46,16 +46,25 @@ class FlickrService: FlickrServiceProtocol {
             ParameterKeys.Format: ParameterDefaultValues.Format,
             ParameterKeys.NoJsonCallback: ParameterDefaultValues.NoJsonCallback,
             ParameterKeys.Method: Methods.PhotosSearch,
-            ParameterKeys.Text: pin.placeName!
+            ParameterKeys.Text: pin.placeName!,
+            ParameterKeys.Extra: ParameterDefaultValues.ExtraMediumURL
         ]
 
         let task = apiClient.makeGETDataTaskForResource(withURL: baseURL, parameters: parameters) { data, error in
             guard error == nil, let data = data else {
+                // TODO: Display errors to the user.
                 return
             }
 
-            let json = try! JSONSerialization.jsonObject(with: data, options: .allowFragments)
-            print(json)
+            let decoder = JSONDecoder()
+            do {
+                let flickrResponseData = try decoder.decode(FlickrSearchResponseData.self, from: data)
+                print(flickrResponseData)
+                // TODO: Return the data to the caller.
+            } catch {
+                // TODO: Display errors to the user.
+                return
+            }
         }
         task.resume()
     }

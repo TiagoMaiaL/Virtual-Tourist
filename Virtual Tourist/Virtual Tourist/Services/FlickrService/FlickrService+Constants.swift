@@ -30,10 +30,12 @@ extension FlickrService {
         static let NoJsonCallback = "nojsoncallback"
         static let Text = "text"
         static let BoundingBox = "bbox"
+        static let Extra = "extras"
     }
 
     enum ParameterDefaultValues {
         static let Format = "json"
         static let NoJsonCallback = "1"
+        static let ExtraMediumURL = "url_m"
     }
 }
