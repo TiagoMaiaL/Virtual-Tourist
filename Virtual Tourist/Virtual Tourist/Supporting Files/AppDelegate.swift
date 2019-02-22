@@ -30,9 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let splashController = window?.rootViewController as? SplashViewController else {
             preconditionFailure("Couldn't get the initial app controller.")
         }
-
         dataController = DataController(modelName: "Virtual_Tourist")
         splashController.dataController = dataController
+        splashController.pinStore = PinMOStore()
+        splashController.albumStore = AlbumMOStore(photoStore: PhotoMOStore())
+        splashController.flickrService = FlickrService(apiClient: APIClient(session: .shared))
 
         return true
     }

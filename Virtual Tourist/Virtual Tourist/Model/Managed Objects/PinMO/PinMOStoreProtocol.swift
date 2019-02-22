@@ -22,8 +22,8 @@ protocol PinMOStoreProtocol {
     ///     - coordinate: the coordinates of the pin.
     /// - Returns: the created pin object.
     func createPin(
-        usingContext: NSManagedObjectContext,
+        usingContext context: NSManagedObjectContext,
         withLocationName locationName: String,
-        andCoordinate: CLLocationCoordinate2D
+        andCoordinate coordinate: CLLocationCoordinate2D
     ) -> PinMO
 }

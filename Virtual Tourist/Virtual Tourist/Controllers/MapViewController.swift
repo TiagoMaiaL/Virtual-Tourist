@@ -18,6 +18,15 @@ class MapViewController: UIViewController {
     /// The data controller of the app.
     var dataController: DataController!
 
+    /// The pin store used to create a new pin.
+    var pinStore: PinMOStoreProtocol!
+
+    /// The album store used to handle the photos for a pin.
+    var albumStore: AlbumMOStoreProtocol!
+
+    /// The service in charge of getting images from Flickr and turning them into photos inside an album.
+    var flickrService: FlickrServiceProtocol!
+
     /// The main map view.
     @IBOutlet weak var mapView: MKMapView!
 
@@ -27,6 +36,9 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
 
         precondition(dataController != nil)
+        precondition(pinStore != nil)
+        precondition(albumStore != nil)
+        precondition(flickrService != nil)
 
         mapView.delegate = self
     }
@@ -80,32 +92,23 @@ class MapViewController: UIViewController {
     /// Creates a new pin and persists it using the passed coordinate.
     /// - Parameter coordinate: the coordinate location of the user's press gesture.
     private func createPin(forCoordinate coordinate: CLLocationCoordinate2D) {
-        // Geocode the coordinate to get more details of the location.
+        // Geocode the coordinate to get more details about the location.
         let geocoder = CLGeocoder()
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
-            self.dataController.persistentContainer.performBackgroundTask { context in
-                let pin = PinMO(context: context)
-                pin.latitude = coordinate.latitude
-                pin.longitude = coordinate.longitude
-
+            DispatchQueue.main.async {
                 if let placemark = placemarks?.first,
                     let administrativeArea = placemark.administrativeArea,
                     let locality = placemark.locality {
-                    pin.placeName = "\(locality), \(administrativeArea)"
-                }
-
-                do {
-                    try context.save()
-                    let pinID = pin.objectID
-                    self.dataController.viewContext.perform {
-                        guard let mainQueuePin = self.dataController.viewContext.object(with: pinID) as? PinMO else {
-                            preconditionFailure("The fetched object wasn't correctly found.")
-                        }
-                        self.display(createdPin: mainQueuePin)
+                    let createdPin = self.pinStore.createPin(usingContext: self.dataController.viewContext,
+                                                             withLocationName: "\(locality), \(administrativeArea)",
+                                                             andCoordinate: coordinate)
+                    do {
+                        try self.dataController.save()
+                        self.display(createdPin: createdPin)
+                    } catch {
+                        // TODO: display errors to the user.
                     }
-                } catch {
-                    // TODO: Display the error back to the user.
                 }
             }
         }

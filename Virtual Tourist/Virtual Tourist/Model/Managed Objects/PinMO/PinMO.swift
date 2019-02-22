@@ -18,5 +18,6 @@ class PinMO: NSManagedObject {
         super.awakeFromInsert()
 
         creationDate = Date()
+        album = AlbumMO(context: managedObjectContext!)
     }
 }
