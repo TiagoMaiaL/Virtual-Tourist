@@ -40,7 +40,10 @@ class FlickrService: FlickrServiceProtocol {
 
     // MARK: Imperatives
 
-    func getPinRelatedImages(_ pin: PinMO) {
+    func requestPinRelatedImages(
+        fromPin pin: PinMO,
+        usingCompletionHandler handler: @escaping ((FlickrSearchResponseData?, URLSessionTask.TaskError?) -> Void)
+        ) {
         let parameters = [
             ParameterKeys.APIKey: flickrAPIKey,
             ParameterKeys.Format: ParameterDefaultValues.Format,
@@ -52,18 +55,16 @@ class FlickrService: FlickrServiceProtocol {
 
         let task = apiClient.makeGETDataTaskForResource(withURL: baseURL, parameters: parameters) { data, error in
             guard error == nil, let data = data else {
-                // TODO: Display errors to the user.
+                handler(nil, error!)
                 return
             }
 
             let decoder = JSONDecoder()
             do {
                 let flickrResponseData = try decoder.decode(FlickrSearchResponseData.self, from: data)
-                print(flickrResponseData)
-                // TODO: Return the data to the caller.
+                handler(flickrResponseData, nil)
             } catch {
-                // TODO: Display errors to the user.
-                return
+                handler(nil, .malformedJsonResponse)
             }
         }
         task.resume()

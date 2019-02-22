@@ -34,6 +34,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dataController = DataController(modelName: "Virtual_Tourist")
         splashController.dataController = dataController
 
+        // TODO: Remove this test code later on.
+        let pinRequest: NSFetchRequest<PinMO> = PinMO.fetchRequest()
+        let pins = try! dataController.viewContext.fetch(pinRequest)
+        if let firstPin = pins.first {
+            // Test the images request.
+            let client = APIClient(session: .shared)
+            let service = FlickrService(apiClient: client)
+            service.requestPinRelatedImages(fromPin: firstPin) { flickrResponseData, error in
+                guard error == nil, let flickrReponseData = flickrResponseData else {
+                    print(error)
+                    return
+                }
+
+                // TODO: Continue with the save process.
+            }
+        }
+
         return true
     }
 

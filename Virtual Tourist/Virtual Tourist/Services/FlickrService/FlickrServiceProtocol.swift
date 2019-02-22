@@ -25,5 +25,9 @@ protocol FlickrServiceProtocol {
     /// Gets the images related to the passed pin, and puts them in the Album associated with the pin.
     /// - Parameters:
     ///     - pin: the pin associated to the images to be downloaded.
-    func getPinRelatedImages(_ pin: PinMO)
+    ///     - completionHandler: the completion handler called after the request returns.
+    func requestPinRelatedImages(
+        fromPin pin: PinMO,
+        usingCompletionHandler handler: @escaping ((FlickrSearchResponseData?, URLSessionTask.TaskError?) -> Void)
+    )
 }

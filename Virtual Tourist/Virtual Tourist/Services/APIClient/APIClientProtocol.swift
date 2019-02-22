@@ -14,6 +14,7 @@ extension URLSessionTask {
     enum TaskError: Error {
         case connection
         case serverResponse
+        case malformedJsonResponse
     }
 }
 
