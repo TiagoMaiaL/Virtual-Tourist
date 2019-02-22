@@ -24,6 +24,11 @@ struct AlbumMOStore: AlbumMOStoreProtocol {
     // MARK: Imperatives
 
     func addPhotos(fromFlickrImages flickrImages: [FlickrImage], toAlbum album: AlbumMO) throws {
-        // TODO:
+        guard let context = album.managedObjectContext else {
+            preconditionFailure("Album instances passed to this method must have a context")
+        }
+
+        flickrImages.forEach { _ = photoStore.createPhoto(fromFlickrImage: $0, associatedToAlbum: album) }
+        try context.save()
     }
 }
