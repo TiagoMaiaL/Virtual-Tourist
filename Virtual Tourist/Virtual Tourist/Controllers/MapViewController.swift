@@ -125,6 +125,14 @@ class MapViewController: UIViewController {
             // TODO: Display any errors back to the user.
             if let pins = try? self.dataController.viewContext.fetch(pinsRequest) {
                 self.mapView.addAnnotations(pins.map { PinAnnotation(pin: $0) })
+
+                // TODO: Remove this later on.
+                if let firstPin = pins.first {
+                    // Test the images request.
+                    let client = APIClient(session: .shared)
+                    let service = FlickrService(apiClient: client)
+                    service.getPinRelatedImages(firstPin)
+                }
             }
         }
     }

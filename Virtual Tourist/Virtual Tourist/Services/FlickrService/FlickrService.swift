@@ -18,6 +18,15 @@ class FlickrService: FlickrServiceProtocol {
 
     let apiClient: APIClientProtocol
 
+    /// The base url used to make the requests to the flickr API.
+    private lazy var baseURL: URL = {
+        var components = URLComponents()
+        components.scheme = API.Scheme
+        components.host = API.Host
+        components.path = API.Path
+        return components.url!
+    }()
+
     // MARK: Initializers
 
     required init(apiClient: APIClientProtocol) {
@@ -32,6 +41,22 @@ class FlickrService: FlickrServiceProtocol {
     // MARK: Imperatives
 
     func getPinRelatedImages(_ pin: PinMO) {
-        // TODO: Make the download of images.
+        let parameters = [
+            ParameterKeys.APIKey: flickrAPIKey,
+            ParameterKeys.Format: ParameterDefaultValues.Format,
+            ParameterKeys.NoJsonCallback: ParameterDefaultValues.NoJsonCallback,
+            ParameterKeys.Method: Methods.PhotosSearch,
+            ParameterKeys.Text: pin.placeName!
+        ]
+
+        let task = apiClient.makeGETDataTaskForResource(withURL: baseURL, parameters: parameters) { data, error in
+            guard error == nil, let data = data else {
+                return
+            }
+
+            let json = try! JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            print(json)
+        }
+        task.resume()
     }
 }
