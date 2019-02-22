@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// A general APIClient used to create configured data tasks.
+/// An instance in charge of generating configured data tasks, using the Foundation URL Loading System.
 struct APIClient: APIClientProtocol {
 
     // MARK: Properties

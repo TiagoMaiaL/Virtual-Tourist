@@ -34,6 +34,7 @@
 		470CE60222146684005E321F /* PhotoMOStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE60122146684005E321F /* PhotoMOStore.swift */; };
 		470CE604221466CD005E321F /* AlbumMOStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE603221466CD005E321F /* AlbumMOStoreProtocol.swift */; };
 		470CE606221466D8005E321F /* AlbumMOStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE605221466D8005E321F /* AlbumMOStore.swift */; };
+		470CE60822146E10005E321F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470CE60722146E10005E321F /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		470CE60122146684005E321F /* PhotoMOStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMOStore.swift; sourceTree = "<group>"; };
 		470CE603221466CD005E321F /* AlbumMOStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMOStoreProtocol.swift; sourceTree = "<group>"; };
 		470CE605221466D8005E321F /* AlbumMOStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMOStore.swift; sourceTree = "<group>"; };
+		470CE60722146E10005E321F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				470CE60822146E10005E321F /* CoreLocation.framework in Frameworks */,
 				470CE5CE22122744005E321F /* CoreData.framework in Frameworks */,
 				470CE5CC2212273C005E321F /* MapKit.framework in Frameworks */,
 			);
@@ -195,6 +198,7 @@
 		470CE5CA2212273C005E321F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				470CE60722146E10005E321F /* CoreLocation.framework */,
 				470CE5CD22122744005E321F /* CoreData.framework */,
 				470CE5CB2212273C005E321F /* MapKit.framework */,
 			);

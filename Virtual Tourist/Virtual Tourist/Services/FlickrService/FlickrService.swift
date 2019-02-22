@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The class in charge of getting resources from Flickr and persisting them to core data.
+/// A service in charge of getting and persisting any external resources from Flickr, using its API.
 class FlickrService: FlickrServiceProtocol {
 
     // MARK: Properties
@@ -16,13 +16,22 @@ class FlickrService: FlickrServiceProtocol {
     /// The flickr API key.
     private let flickrAPIKey: String
 
+    let apiClient: APIClientProtocol
+
     // MARK: Initializers
 
-    init() {
+    required init(apiClient: APIClientProtocol) {
         guard let flickrAPIKey = Bundle.main.object(forInfoDictionaryKey: "Flickr api key") as? String else {
             preconditionFailure("The flickr API key must be properly configured.")
         }
 
+        self.apiClient = apiClient
         self.flickrAPIKey = flickrAPIKey
+    }
+
+    // MARK: Imperatives
+
+    func getPinRelatedImages(_ pin: PinMO) {
+        // TODO: Make the download of images.
     }
 }

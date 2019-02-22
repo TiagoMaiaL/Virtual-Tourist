@@ -17,7 +17,7 @@ extension URLSessionTask {
     }
 }
 
-/// The protocol defining what an API client adopter should provide in its interface.
+/// An instance in charge of generating configured data tasks, using the Foundation URL Loading System.
 protocol APIClientProtocol {
 
     // MARK: Types
