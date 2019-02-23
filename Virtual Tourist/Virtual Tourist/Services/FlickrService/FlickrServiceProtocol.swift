@@ -16,18 +16,33 @@ protocol FlickrServiceProtocol {
     /// The base api client used to load the resources from flickr.
     var apiClient: APIClientProtocol { get }
 
+    /// The store used to add photos to the album and persist them.
+    var albumStore: AlbumMOStoreProtocol { get }
+
+    /// The data controller used to access core data.
+    var dataController: DataController { get }
+
     // MARK: Initializers
 
-    init(apiClient: APIClientProtocol)
+    init(apiClient: APIClientProtocol, albumStore: AlbumMOStoreProtocol, dataController: DataController)
 
     // MARK: Imperatives
+
+    /// Requests and saves the associated Flickr images inside the album of the passed pin.
+    /// - Parameters:
+    ///     - pin: the pin containing the album.
+    ///     - handler: the completion handler called after the work finishes.
+    func populatePinWithPhotosFromFlickr(
+        _ pin: PinMO,
+        withCompletionHandler handler: @escaping (PinMO?, Error?) -> Void
+    )
 
     /// Gets the images related to the passed pin, and puts them in the Album associated with the pin.
     /// - Parameters:
     ///     - pin: the pin associated to the images to be downloaded.
-    ///     - completionHandler: the completion handler called after the request returns.
-    func requestPinRelatedImages(
-        fromPin pin: PinMO,
+    ///     - handler: the completion handler called after the request returns.
+    func requestImages(
+        relatedToPin pin: PinMO,
         usingCompletionHandler handler: @escaping ((FlickrSearchResponseData?, URLSessionTask.TaskError?) -> Void)
     )
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import CoreData
 
 /// The controller in charge of initializng the app's main resources.
 class SplashViewController: UIViewController {
@@ -47,31 +46,6 @@ class SplashViewController: UIViewController {
                 return
             }
 
-//            // TODO: Remove this test code later on.
-//            DispatchQueue.main.async {
-//                let pinRequest: NSFetchRequest<PinMO> = PinMO.fetchRequest()
-//                let pins = try! self.dataController.viewContext.fetch(pinRequest)
-//                if let firstPin = pins.first {
-//                    // Test the images request.
-//                    let client = APIClient(session: .shared)
-//                    let service = FlickrService(apiClient: client)
-//                    service.requestPinRelatedImages(fromPin: firstPin) { flickrResponseData, error in
-//                        guard error == nil, let flickrReponseData = flickrResponseData else {
-//                            print(error)
-//                            return
-//                        }
-//
-//                        // TODO: Continue with the save process.
-//                        DispatchQueue.main.async {
-//                            let albumStore = AlbumMOStore(photoStore: PhotoMOStore())
-//                            self.dataController.viewContext.perform {
-//                                try! albumStore.addPhotos(fromFlickrImages: flickrResponseData!.data.photos,
-//                                                          toAlbum: firstPin.album!)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
             self.performSegue(withIdentifier: SegueIdentifiers.ShowMap, sender: nil)
         }
     }

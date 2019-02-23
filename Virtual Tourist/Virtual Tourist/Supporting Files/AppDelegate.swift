@@ -34,7 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         splashController.dataController = dataController
         splashController.pinStore = PinMOStore()
         splashController.albumStore = AlbumMOStore(photoStore: PhotoMOStore())
-        splashController.flickrService = FlickrService(apiClient: APIClient(session: .shared))
+        splashController.flickrService = FlickrService(
+            apiClient: APIClient(session: .shared),
+            albumStore: splashController.albumStore,
+            dataController: dataController
+        )
 
         return true
     }

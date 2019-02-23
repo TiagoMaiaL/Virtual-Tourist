@@ -18,6 +18,10 @@ class FlickrService: FlickrServiceProtocol {
 
     let apiClient: APIClientProtocol
 
+    var albumStore: AlbumMOStoreProtocol
+
+    var dataController: DataController
+
     /// The base url used to make the requests to the flickr API.
     private lazy var baseURL: URL = {
         var components = URLComponents()
@@ -29,19 +33,48 @@ class FlickrService: FlickrServiceProtocol {
 
     // MARK: Initializers
 
-    required init(apiClient: APIClientProtocol) {
+    required init(apiClient: APIClientProtocol, albumStore: AlbumMOStoreProtocol, dataController: DataController) {
         guard let flickrAPIKey = Bundle.main.object(forInfoDictionaryKey: "Flickr api key") as? String else {
             preconditionFailure("The flickr API key must be properly configured.")
         }
 
         self.apiClient = apiClient
         self.flickrAPIKey = flickrAPIKey
+        self.albumStore = albumStore
+        self.dataController = dataController
     }
 
     // MARK: Imperatives
 
-    func requestPinRelatedImages(
-        fromPin pin: PinMO,
+    func populatePinWithPhotosFromFlickr(
+        _ pin: PinMO,
+        withCompletionHandler handler: @escaping (PinMO?, Error?) -> Void
+        ) {
+        let pinObjectID = pin.objectID
+
+        requestImages(relatedToPin: pin) { flickrResponseData, taskError in
+            guard taskError == nil, let flickrResponseData = flickrResponseData else {
+                handler(nil, taskError!)
+                return
+            }
+
+            self.dataController.persistentContainer.performBackgroundTask { context in
+                guard let pinInBackgroundContext = context.object(with: pinObjectID) as? PinMO else {
+                    preconditionFailure("Pin must be correctly fetched in bg context.")
+                }
+
+                do {
+                    try self.albumStore.addPhotos(fromFlickrImages: flickrResponseData.data.photos,
+                                                  toAlbum: pinInBackgroundContext.album!)
+                } catch {
+                    handler(nil, error)
+                }
+            }
+        }
+    }
+
+    func requestImages(
+        relatedToPin pin: PinMO,
         usingCompletionHandler handler: @escaping ((FlickrSearchResponseData?, URLSessionTask.TaskError?) -> Void)
         ) {
         let parameters = [
