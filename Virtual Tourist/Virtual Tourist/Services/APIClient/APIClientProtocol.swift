@@ -15,6 +15,7 @@ extension URLSessionTask {
         case connection
         case serverResponse
         case malformedJsonResponse
+        case unexpectedResource
     }
 }
 
@@ -41,11 +42,13 @@ protocol APIClientProtocol {
     /// - Parameters:
     ///     - resourceUrl: the url of the desired resource.
     ///     - parameters: the parameters to be passed with the request.
+    ///     - headers: the headers to be sent with the request.
     ///     - completionHandler: the completion handler called when the task finishes, with an error or the data.
     /// - Returns: the configured and not resumed data task.
     func makeGETDataTaskForResource(
         withURL resourceURL: URL,
         parameters: [String: String],
+        headers: [String: String]?,
         andCompletionHandler handler: @escaping (JsonData?, URLSessionTask.TaskError?) -> Void
     ) -> URLSessionDataTask
 }

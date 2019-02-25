@@ -26,5 +26,4 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         photoLoadingActivityIndicator.stopAnimating()
         photoImageView.image = nil
     }
-
 }

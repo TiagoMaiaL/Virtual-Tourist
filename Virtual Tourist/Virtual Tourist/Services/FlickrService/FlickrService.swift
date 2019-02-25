@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// A service in charge of getting and persisting any external resources from Flickr, using its API.
 class FlickrService: FlickrServiceProtocol {
@@ -86,7 +87,11 @@ class FlickrService: FlickrServiceProtocol {
             ParameterKeys.Extra: ParameterDefaultValues.ExtraMediumURL
         ]
 
-        let task = apiClient.makeGETDataTaskForResource(withURL: baseURL, parameters: parameters) { data, error in
+        let task = apiClient.makeGETDataTaskForResource(
+            withURL: baseURL,
+            parameters: parameters,
+            headers: nil
+        ) { data, error in
             guard error == nil, let data = data else {
                 handler(nil, error!)
                 return
@@ -99,6 +104,30 @@ class FlickrService: FlickrServiceProtocol {
             } catch {
                 handler(nil, .malformedJsonResponse)
             }
+        }
+        task.resume()
+    }
+
+    func requestImage(
+        fromUrl flickrUrl: URL,
+        usingComplitionHandler handler: @escaping (UIImage?, URLSessionTask.TaskError?) -> Void
+        ) {
+        let task = apiClient.makeGETDataTaskForResource(
+            withURL: flickrUrl,
+            parameters: [:],
+            headers: [:]
+        ) { data, taskError in
+            guard let data = data, taskError == nil else {
+                handler(nil, taskError)
+                return
+            }
+
+            guard let image = UIImage(data: data) else {
+                handler(nil, .unexpectedResource)
+                return
+            }
+
+            handler(image, nil)
         }
         task.resume()
     }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// A service in charge of getting and persisting any external resources from Flickr, using its API.
 protocol FlickrServiceProtocol {
@@ -44,5 +45,14 @@ protocol FlickrServiceProtocol {
     func requestImages(
         relatedToPin pin: PinMO,
         usingCompletionHandler handler: @escaping ((FlickrSearchResponseData?, URLSessionTask.TaskError?) -> Void)
+    )
+
+    /// Requests the image from the passed Flickr url.
+    /// - Parameters:
+    ///     - url: the url of the image to be loaded.
+    ///     - handler: the closure called as a completion handler.
+    func requestImage(
+        fromUrl flickrUrl: URL,
+        usingComplitionHandler handler: @escaping (UIImage?, URLSessionTask.TaskError?) -> Void
     )
 }

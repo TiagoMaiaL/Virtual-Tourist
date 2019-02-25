@@ -48,10 +48,14 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier:
+            reuseIdentifier, for: indexPath
+            ) as? PhotoCollectionViewCell else {
+                preconditionFailure("The cell must be of photo type.")
+        }
 
         let currentPhoto = photosFetchedResultsController.object(at: indexPath)
-        // TODO: Configure the cell
         // TODO: Download, associate, save, and display the image.
     
         return cell
