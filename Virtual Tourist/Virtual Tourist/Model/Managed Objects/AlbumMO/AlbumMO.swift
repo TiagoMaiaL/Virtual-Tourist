@@ -18,6 +18,7 @@ class AlbumMO: NSManagedObject {
         super.awakeFromInsert()
 
         creationDate = Date()
+        id = UUID().uuidString
     }
 }
 

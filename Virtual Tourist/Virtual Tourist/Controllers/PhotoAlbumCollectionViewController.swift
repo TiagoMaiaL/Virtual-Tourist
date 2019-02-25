@@ -35,6 +35,8 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         precondition(flickrService != nil)
         precondition(photosFetchedResultsController != nil)
 
+        photosFetchedResultsController.delegate = self
+
         title = pin.placeName
 
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -72,5 +74,30 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         }
 
         return cell
+    }
+}
+
+extension PhotoAlbumCollectionViewController: NSFetchedResultsControllerDelegate {
+
+    // MARK: Fetched results controller delegate methods
+
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?
+        ) {
+        print("Updating items.")
+
+        switch type {
+        case .insert:
+            collectionView.insertItems(at: [newIndexPath!])
+
+        case .delete:
+            collectionView.deleteItems(at: [indexPath!])
+
+        default: break
+        }
     }
 }

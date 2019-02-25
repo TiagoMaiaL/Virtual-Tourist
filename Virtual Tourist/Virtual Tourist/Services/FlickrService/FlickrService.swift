@@ -67,6 +67,7 @@ class FlickrService: FlickrServiceProtocol {
                 do {
                     try self.albumStore.addPhotos(fromFlickrImages: flickrResponseData.data.photos,
                                                   toAlbum: pinInBackgroundContext.album!)
+                    handler(pin, nil)
                 } catch {
                     handler(nil, error)
                 }

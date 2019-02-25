@@ -106,9 +106,19 @@ class MapViewController: UIViewController {
                                                              andCoordinate: coordinate)
                     do {
                         try self.dataController.save()
+
+                        self.flickrService.populatePinWithPhotosFromFlickr(createdPin) { createdPin, error in
+                            guard error == nil, createdPin != nil else {
+                                // TODO: Display request failure to user.
+                                print("Error while trying to request and save the images of the album")
+                                return
+                            }
+                        }
+
                         self.display(createdPin: createdPin)
                     } catch {
                         // TODO: display errors to the user.
+                        
                     }
                 }
             }
