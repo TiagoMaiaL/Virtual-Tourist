@@ -39,18 +39,20 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return photosFetchedResultsController.sections?.count ?? 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return photosFetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
+
+        let currentPhoto = photosFetchedResultsController.object(at: indexPath)
+        // TODO: Configure the cell
+        // TODO: Download, associate, save, and display the image.
     
         return cell
     }

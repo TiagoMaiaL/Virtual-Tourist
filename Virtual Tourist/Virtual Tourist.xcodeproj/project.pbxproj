@@ -35,6 +35,7 @@
 		470CE604221466CD005E321F /* AlbumMOStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE603221466CD005E321F /* AlbumMOStoreProtocol.swift */; };
 		470CE606221466D8005E321F /* AlbumMOStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE605221466D8005E321F /* AlbumMOStore.swift */; };
 		470CE60822146E10005E321F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470CE60722146E10005E321F /* CoreLocation.framework */; };
+		4734454322238B2000D40298 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4734454222238B2000D40298 /* PhotoCollectionViewCell.swift */; };
 		47D9263D222063F70002A59B /* FlickrData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9263C222063F70002A59B /* FlickrData.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		470CE603221466CD005E321F /* AlbumMOStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMOStoreProtocol.swift; sourceTree = "<group>"; };
 		470CE605221466D8005E321F /* AlbumMOStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMOStore.swift; sourceTree = "<group>"; };
 		470CE60722146E10005E321F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		4734454222238B2000D40298 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		47D9263C222063F70002A59B /* FlickrData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,10 +164,11 @@
 		470CE5C622122635005E321F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				470CE5A6221222BA005E321F /* Main.storyboard */,
+				470CE5DC221237F6005E321F /* UIViewController+Constants.swift */,
+				470CE5DA221235B1005E321F /* SplashViewController.swift */,
 				470CE5CF2212297D005E321F /* MapViewController.swift */,
 				470CE5D122122999005E321F /* PhotoAlbumCollectionViewController.swift */,
-				470CE5DA221235B1005E321F /* SplashViewController.swift */,
-				470CE5DC221237F6005E321F /* UIViewController+Constants.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -182,7 +185,7 @@
 		470CE5C822122646005E321F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				470CE5A6221222BA005E321F /* Main.storyboard */,
+				4734454222238B2000D40298 /* PhotoCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				470CE60022146672005E321F /* PhotoMOStoreProtocol.swift in Sources */,
 				470CE5E822137ECE005E321F /* FlickrService+Constants.swift in Sources */,
 				470CE60222146684005E321F /* PhotoMOStore.swift in Sources */,
+				4734454322238B2000D40298 /* PhotoCollectionViewCell.swift in Sources */,
 				470CE5AB221222BA005E321F /* Virtual_Tourist.xcdatamodeld in Sources */,
 				470CE5DD221237F6005E321F /* UIViewController+Constants.swift in Sources */,
 				470CE5D222122999005E321F /* PhotoAlbumCollectionViewController.swift in Sources */,

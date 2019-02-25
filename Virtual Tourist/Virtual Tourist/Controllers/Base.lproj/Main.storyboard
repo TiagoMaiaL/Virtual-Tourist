@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -37,7 +38,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RO3-RK-k92" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-726" y="27"/>
+            <point key="canvasLocation" x="-783" y="27"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -76,7 +77,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="73" y="27"/>
+            <point key="canvasLocation" x="50" y="27"/>
         </scene>
         <!--Photo Album Collection View Controller-->
         <scene sceneID="zPN-zg-ebX">
@@ -87,19 +88,41 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="We2-E5-nhM">
-                            <size key="itemSize" width="50" height="50"/>
+                            <size key="itemSize" width="178" height="172"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="5ZW-Ac-pKa">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="5ZW-Ac-pKa" customClass="PhotoCollectionViewCell" customModule="Virtual_Tourist" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sin-lD-KKr">
+                                            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                        </imageView>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="xnx-Xj-ZF3">
+                                            <rect key="frame" x="80" y="80" width="20" height="20"/>
+                                            <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </activityIndicatorView>
+                                    </subviews>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="sin-lD-KKr" firstAttribute="top" secondItem="5ZW-Ac-pKa" secondAttribute="top" id="FVh-bN-Lso"/>
+                                    <constraint firstAttribute="bottom" secondItem="sin-lD-KKr" secondAttribute="bottom" id="J9Z-e8-hPq"/>
+                                    <constraint firstItem="xnx-Xj-ZF3" firstAttribute="centerX" secondItem="5ZW-Ac-pKa" secondAttribute="centerX" id="sdJ-z7-5Dh"/>
+                                    <constraint firstItem="sin-lD-KKr" firstAttribute="leading" secondItem="5ZW-Ac-pKa" secondAttribute="leading" id="vdJ-95-fdi"/>
+                                    <constraint firstItem="xnx-Xj-ZF3" firstAttribute="centerY" secondItem="5ZW-Ac-pKa" secondAttribute="centerY" id="z5Y-0L-Xpb"/>
+                                    <constraint firstAttribute="trailing" secondItem="sin-lD-KKr" secondAttribute="trailing" id="zvX-Du-3Vb"/>
+                                </constraints>
+                                <size key="customSize" width="180" height="180"/>
+                                <connections>
+                                    <outlet property="photoImageView" destination="sin-lD-KKr" id="3g8-7w-hhS"/>
+                                    <outlet property="photoLoadingActivityIndicator" destination="xnx-Xj-ZF3" id="4va-9f-HIP"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -110,7 +133,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TEb-l3-497" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="857" y="27"/>
+            <point key="canvasLocation" x="856.79999999999995" y="26.53673163418291"/>
         </scene>
     </scenes>
 </document>
