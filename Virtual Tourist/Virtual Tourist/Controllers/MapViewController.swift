@@ -72,6 +72,7 @@ class MapViewController: UIViewController {
                 cacheName: selectedPin.placeName
             )
             albumController.pin = selectedPin
+            albumController.flickrService = flickrService
         }
     }
 

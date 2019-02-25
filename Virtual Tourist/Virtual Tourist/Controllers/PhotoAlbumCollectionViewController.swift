@@ -20,6 +20,9 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
     /// The pin object associated with the album.
     var pin: PinMO!
 
+    /// The flickr service used to request the images.
+    var flickrService: FlickrServiceProtocol!
+
     /// The fetched results controller in charge of populating the collection view.
     var photosFetchedResultsController: NSFetchedResultsController<PhotoMO>!
 
@@ -29,6 +32,7 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
 
         precondition(pin != nil)
+        precondition(flickrService != nil)
         precondition(photosFetchedResultsController != nil)
 
         title = pin.placeName
@@ -56,8 +60,17 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         }
 
         let currentPhoto = photosFetchedResultsController.object(at: indexPath)
-        // TODO: Download, associate, save, and display the image.
-    
+        flickrService.requestImage(fromUrl: currentPhoto.url!) { image, error in
+            guard error == nil, let image = image else {
+                // TODO: Display the failure in the cell?
+                // TODO: Find a way to display this error to the user.
+                return
+            }
+
+            cell.photoImageView.image = image
+            cell.photoLoadingActivityIndicator.stopAnimating()
+        }
+
         return cell
     }
 }
