@@ -16,7 +16,7 @@ struct PinMOStore: PinMOStoreProtocol {
 
     func createPin(
         usingContext context: NSManagedObjectContext,
-        withLocationName locationName: String,
+        withLocationName locationName: String?,
         andCoordinate coordinate: CLLocationCoordinate2D) -> PinMO {
 
         let pin = PinMO(context: context)

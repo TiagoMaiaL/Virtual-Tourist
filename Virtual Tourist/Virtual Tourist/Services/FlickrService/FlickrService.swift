@@ -79,14 +79,20 @@ class FlickrService: FlickrServiceProtocol {
         relatedToPin pin: PinMO,
         usingCompletionHandler handler: @escaping ((FlickrSearchResponseData?, URLSessionTask.TaskError?) -> Void)
         ) {
-        let parameters = [
+        var parameters = [
             ParameterKeys.APIKey: flickrAPIKey,
             ParameterKeys.Format: ParameterDefaultValues.Format,
             ParameterKeys.NoJsonCallback: ParameterDefaultValues.NoJsonCallback,
             ParameterKeys.Method: Methods.PhotosSearch,
-            ParameterKeys.Text: pin.placeName!,
             ParameterKeys.Extra: ParameterDefaultValues.ExtraMediumURL
         ]
+
+        if let locationName = pin.placeName {
+            parameters[ParameterKeys.Text] = locationName
+        } else {
+            parameters[ParameterKeys.BoundingBox] =
+            "\(pin.longitude - 0.1), \(pin.latitude - 0.1), \(pin.longitude + 0.1), \(pin.latitude + 0.1)"
+        }
 
         let task = apiClient.makeGETDataTaskForResource(
             withURL: baseURL,

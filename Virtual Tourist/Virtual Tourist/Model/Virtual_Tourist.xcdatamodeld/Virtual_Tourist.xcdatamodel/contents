@@ -17,7 +17,7 @@
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="latitude" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitude" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="placeName" attributeType="String" syncable="YES"/>
+        <attribute name="placeName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="album" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AlbumMO" inverseName="pin" inverseEntity="AlbumMO" syncable="YES"/>
     </entity>
     <elements>

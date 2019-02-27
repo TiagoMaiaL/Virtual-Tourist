@@ -35,11 +35,12 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         precondition(flickrService != nil)
         precondition(photosFetchedResultsController != nil)
 
-        photosFetchedResultsController.delegate = self
-
         title = pin.placeName
 
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+
+        photosFetchedResultsController.delegate = self
+        try! photosFetchedResultsController.performFetch()
     }
 
     // MARK: UICollectionViewDataSource

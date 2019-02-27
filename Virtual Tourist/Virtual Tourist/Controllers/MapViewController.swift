@@ -98,28 +98,36 @@ class MapViewController: UIViewController {
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
             DispatchQueue.main.async {
+                var locationName: String?
+
                 if let placemark = placemarks?.first,
                     let administrativeArea = placemark.administrativeArea,
                     let locality = placemark.locality {
-                    let createdPin = self.pinStore.createPin(usingContext: self.dataController.viewContext,
-                                                             withLocationName: "\(locality), \(administrativeArea)",
-                                                             andCoordinate: coordinate)
-                    do {
-                        try self.dataController.save()
+                    locationName = "\(locality), \(administrativeArea)"
+                }
 
-                        self.flickrService.populatePinWithPhotosFromFlickr(createdPin) { createdPin, error in
-                            guard error == nil, createdPin != nil else {
-                                // TODO: Display request failure to user.
-                                print("Error while trying to request and save the images of the album")
-                                return
-                            }
+                do {
+                    let createdPin = self.pinStore.createPin(
+                        usingContext: self.dataController.viewContext,
+                        withLocationName: locationName,
+                        andCoordinate: coordinate
+                    )
+
+                    try self.dataController.save()
+
+                    self.flickrService.populatePinWithPhotosFromFlickr(createdPin) { createdPin, error in
+                        guard error == nil, createdPin != nil else {
+                            // TODO: Display request failure to user.
+                            print("Error while trying to request and save the images of the album")
+                            return
                         }
 
-                        self.display(createdPin: createdPin)
-                    } catch {
-                        // TODO: display errors to the user.
-                        
+                        print("Finished adding photos to album")
                     }
+
+                    self.display(createdPin: createdPin)
+                } catch {
+                    // TODO: display errors to the user.
                 }
             }
         }
