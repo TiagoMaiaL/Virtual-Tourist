@@ -15,7 +15,7 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
     // MARK: Properties
 
     /// The reuse identifier of the collection cells.
-    private let reuseIdentifier = "Cell"
+    private let reuseIdentifier = "photoCell"
 
     /// The pin object associated with the album.
     var pin: PinMO!
@@ -37,8 +37,6 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
         title = pin.placeName
 
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
         photosFetchedResultsController.delegate = self
         try! photosFetchedResultsController.performFetch()
     }
@@ -56,13 +54,14 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier:
-            reuseIdentifier, for: indexPath
+            withReuseIdentifier: reuseIdentifier,
+            for: indexPath
             ) as? PhotoCollectionViewCell else {
                 preconditionFailure("The cell must be of photo type.")
         }
 
         let currentPhoto = photosFetchedResultsController.object(at: indexPath)
+        cell.photoLoadingActivityIndicator.startAnimating()
         flickrService.requestImage(fromUrl: currentPhoto.url!) { image, error in
             guard error == nil, let image = image else {
                 // TODO: Display the failure in the cell?
@@ -70,8 +69,16 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
                 return
             }
 
-            cell.photoImageView.image = image
-            cell.photoLoadingActivityIndicator.stopAnimating()
+            DispatchQueue.main.async {
+                // Only update the cell with the photo if it still holds the one to be displayed
+                if let currentIndexPath = self.collectionView.indexPath(for: cell) {
+                    let photoAtResponseTime = self.photosFetchedResultsController.object(at: currentIndexPath)
+                    if photoAtResponseTime == currentPhoto {
+                        cell.photoImageView.image = image
+                        cell.photoLoadingActivityIndicator.stopAnimating()
+                    }
+                }
+            }
         }
 
         return cell

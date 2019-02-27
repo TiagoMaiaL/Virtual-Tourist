@@ -59,17 +59,9 @@ class MapViewController: UIViewController {
             }
             let selectedPin = selectedPinAnnotation.pin
 
-            let photosRequest: NSFetchRequest<PhotoMO> = PhotoMO.fetchRequest()
-            photosRequest.predicate = NSPredicate(format: "pin = %@", selectedPin)
-            photosRequest.sortDescriptors = [
-                NSSortDescriptor(key: "creationDate", ascending: false)
-            ]
-
-            albumController.photosFetchedResultsController = NSFetchedResultsController<PhotoMO>(
-                fetchRequest: photosRequest,
-                managedObjectContext: dataController.viewContext,
-                sectionNameKeyPath: nil,
-                cacheName: selectedPin.placeName
+            albumController.photosFetchedResultsController = albumStore.photoStore.getPhotosFetchedResultsController(
+                fromAlbum: selectedPin.album!,
+                fetchingFromContext: dataController.viewContext
             )
             albumController.pin = selectedPin
             albumController.flickrService = flickrService
