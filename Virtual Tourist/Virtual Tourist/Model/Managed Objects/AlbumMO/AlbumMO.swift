@@ -12,6 +12,13 @@ import CoreData
 /// The managed object representing an album associated to a pin.
 class AlbumMO: NSManagedObject {
 
+    // MARK: Properties
+
+    /// Flag indicating if the album has images.
+    var hasImages: Bool {
+        return (photos?.count ?? 0) > 0
+    }
+
     // MARK: Life cycle
 
     override func awakeFromInsert() {
@@ -21,5 +28,3 @@ class AlbumMO: NSManagedObject {
         id = UUID().uuidString
     }
 }
-
-

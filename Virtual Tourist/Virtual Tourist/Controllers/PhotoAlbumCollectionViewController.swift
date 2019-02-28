@@ -53,6 +53,33 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // Download the images, if necessary.
+        if !pin.album!.hasImages {
+            flickrService.populatePinWithPhotosFromFlickr(pin) { pin, error in
+                guard error == nil, pin != nil else {
+                    // TODO: Display request failure to user.
+                    print("Error while trying to request and save the images of the album")
+                    return
+                }
+
+                print("Finished adding photos to album")
+                DispatchQueue.main.async {
+                    do {
+                        try self.photosFetchedResultsController.performFetch()
+                    } catch {
+                        // TODO: Display error to the user.
+                    }
+
+                    // TODO: Make this animated.
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+    }
+
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
