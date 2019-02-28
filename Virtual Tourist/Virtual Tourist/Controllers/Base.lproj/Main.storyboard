@@ -33,23 +33,23 @@
                         <viewLayoutGuide key="safeArea" id="vg8-XW-Kjc"/>
                     </view>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="Show map" id="ejV-dg-qF0"/>
+                        <segue destination="WEA-ek-bfV" kind="show" identifier="Show map" id="ejV-dg-qF0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RO3-RK-k92" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-783" y="27"/>
         </scene>
-        <!--Map View Controller-->
+        <!--Add pins-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Add pins" id="BYZ-38-t0r" customClass="MapViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NUY-j7-tTb">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="Ksj-Tq-ocG" appends="YES" id="NMX-MD-4sA"/>
@@ -65,6 +65,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Add pins" id="8Tf-X4-Fej"/>
                     <connections>
                         <outlet property="mapView" destination="NUY-j7-tTb" id="aR6-1a-Cj0"/>
                         <segue destination="k7G-J2-h9r" kind="show" identifier="Show album" id="cdU-2r-bwb"/>
@@ -77,7 +78,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="50" y="27"/>
+            <point key="canvasLocation" x="988" y="26.53673163418291"/>
         </scene>
         <!--Photo Album Collection View Controller-->
         <scene sceneID="zPN-zg-ebX">
@@ -134,7 +135,25 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TEb-l3-497" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="856.79999999999995" y="26.53673163418291"/>
+            <point key="canvasLocation" x="1796" y="26.53673163418291"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eCs-5Q-g1D">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WEA-ek-bfV" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bL5-xZ-h0F">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="VLN-6A-TVE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kor-Ew-OOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="48.799999999999997" y="26.53673163418291"/>
         </scene>
     </scenes>
 </document>

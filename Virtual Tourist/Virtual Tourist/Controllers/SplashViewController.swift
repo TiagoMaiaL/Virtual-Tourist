@@ -53,7 +53,9 @@ class SplashViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SegueIdentifiers.ShowMap, let mapController = segue.destination as? MapViewController {
+        if segue.identifier == SegueIdentifiers.ShowMap,
+            let navigationController = segue.destination as? UINavigationController,
+            let mapController = navigationController.visibleViewController as? MapViewController {
             mapController.dataController = dataController
             mapController.pinStore = pinStore
             mapController.albumStore = albumStore
