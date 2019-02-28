@@ -41,6 +41,18 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         try! photosFetchedResultsController.performFetch()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        // Save any images into core data.
+        do {
+            try pin.managedObjectContext?.save()
+        } catch {
+            // TODO: Display errors back to the user.
+            print("Error while saving album.")
+        }
+    }
+
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -61,21 +73,30 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         }
 
         let currentPhoto = photosFetchedResultsController.object(at: indexPath)
-        cell.photoLoadingActivityIndicator.startAnimating()
-        flickrService.requestImage(fromUrl: currentPhoto.url!) { image, error in
-            guard error == nil, let image = image else {
-                // TODO: Display the failure in the cell?
-                // TODO: Find a way to display this error to the user.
-                return
-            }
 
-            DispatchQueue.main.async {
-                // Only update the cell with the photo if it still holds the one to be displayed
-                if let currentIndexPath = self.collectionView.indexPath(for: cell) {
-                    let photoAtResponseTime = self.photosFetchedResultsController.object(at: currentIndexPath)
-                    if photoAtResponseTime == currentPhoto {
-                        cell.photoImageView.image = image
-                        cell.photoLoadingActivityIndicator.stopAnimating()
+        if let photoImage = currentPhoto.image {
+            cell.photoImageView.image = photoImage
+            cell.photoLoadingActivityIndicator.stopAnimating()
+        } else {
+            // Request the images and save them into core data.
+            cell.photoLoadingActivityIndicator.startAnimating()
+            flickrService.requestImage(fromUrl: currentPhoto.url!) { image, error in
+                guard error == nil, let image = image else {
+                    // TODO: Display the failure in the cell?
+                    // TODO: Find a way to display this error to the user.
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    // Only update the cell with the photo if it still holds the one to be displayed
+                    if let currentIndexPath = self.collectionView.indexPath(for: cell) {
+                        currentPhoto.data = image.jpegData(compressionQuality: 1)
+
+                        let photoAtResponseTime = self.photosFetchedResultsController.object(at: currentIndexPath)
+                        if photoAtResponseTime == currentPhoto {
+                            cell.photoImageView.image = image
+                            cell.photoLoadingActivityIndicator.stopAnimating()
+                        }
                     }
                 }
             }
