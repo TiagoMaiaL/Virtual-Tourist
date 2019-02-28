@@ -92,10 +92,8 @@ class MapViewController: UIViewController {
             DispatchQueue.main.async {
                 var locationName: String?
 
-                if let placemark = placemarks?.first,
-                    let administrativeArea = placemark.administrativeArea,
-                    let locality = placemark.locality {
-                    locationName = "\(locality), \(administrativeArea)"
+                if let placemark = placemarks?.first {
+                    locationName = placemark.placeName
                 }
 
                 do {
