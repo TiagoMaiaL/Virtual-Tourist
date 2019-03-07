@@ -107,18 +107,20 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         } else {
             // Request the images and save them into core data.
             cell.photoLoadingActivityIndicator.startAnimating()
+
             flickrService.requestImage(fromUrl: currentPhoto.url!) { image, error in
                 guard error == nil, let image = image else {
                     // TODO: Display the failure in the cell?
                     // TODO: Find a way to display this error to the user.
+                    print("Error loading image...")
                     return
                 }
 
                 DispatchQueue.main.async {
+                    currentPhoto.data = image.jpegData(compressionQuality: 1)
+
                     // Only update the cell with the photo if it still holds the one to be displayed
                     if let currentIndexPath = self.collectionView.indexPath(for: cell) {
-                        currentPhoto.data = image.jpegData(compressionQuality: 1)
-
                         let photoAtResponseTime = self.photosFetchedResultsController.object(at: currentIndexPath)
                         if photoAtResponseTime == currentPhoto {
                             cell.photoImageView.image = image

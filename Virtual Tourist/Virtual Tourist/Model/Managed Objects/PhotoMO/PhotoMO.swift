@@ -16,13 +16,7 @@ class PhotoMO: NSManagedObject {
     // MARK: Properties
 
     /// The image of this photo entity.
-    var image: UIImage? {
-        if let data = data {
-            return UIImage(data: data)
-        } else {
-            return nil
-        }
-    }
+    var image: UIImage?
 
     // MARK: Life cycle
 
@@ -30,5 +24,13 @@ class PhotoMO: NSManagedObject {
         super.awakeFromInsert()
 
         creationDate = Date()
+    }
+
+    override func awakeFromFetch() {
+        super.awakeFromFetch()
+
+        if let data = data, image == nil {
+            image = UIImage(data: data)
+        }
     }
 }
