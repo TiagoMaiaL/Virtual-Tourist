@@ -31,6 +31,12 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     // MARK: Life cycle
 
+    deinit {
+        // TODO: Deinitialize everything.
+        // TODO: Make sure there's no strong reference cycle to this controller.
+        // TODO: Update the view context when a background context is saved (use notifications for this).
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -145,6 +151,13 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         }
 
         return cell
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let currentPhoto = photosFetchedResultsController.object(at: indexPath)
+        // Remove the image from the album.
+        currentPhoto.album = nil
+        photosFetchedResultsController.managedObjectContext.delete(currentPhoto)
     }
 }
 
