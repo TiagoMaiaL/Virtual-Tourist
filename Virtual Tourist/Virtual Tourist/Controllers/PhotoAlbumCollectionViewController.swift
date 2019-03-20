@@ -14,6 +14,9 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     // MARK: Properties
 
+    /// The flow layout of the collection view.
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+
     /// The reuse identifier of the collection cells.
     private let reuseIdentifier = "photoCell"
 
@@ -30,6 +33,8 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        
 
         precondition(pin != nil)
         precondition(flickrService != nil)
@@ -73,7 +78,6 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
                         // TODO: Display error to the user.
                     }
 
-                    // TODO: Make this animated.
                     self.collectionView.reloadData()
                 }
             }
@@ -85,7 +89,6 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return photosFetchedResultsController.sections?.count ?? 1
     }
-
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photosFetchedResultsController.sections?[section].numberOfObjects ?? 0
@@ -132,6 +135,26 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         }
 
         return cell
+    }
+}
+
+extension PhotoAlbumCollectionViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+        ) -> CGSize {
+        let sidesMetric = (collectionView.frame.size.width / 3) - 1 // 1 px of padding between the cells.
+        return CGSize(width: sidesMetric, height: sidesMetric)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
     }
 }
 
