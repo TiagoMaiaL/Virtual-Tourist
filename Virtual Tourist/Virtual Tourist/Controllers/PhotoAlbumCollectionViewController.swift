@@ -34,8 +34,6 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-
         precondition(pin != nil)
         precondition(flickrService != nil)
         precondition(photosFetchedResultsController != nil)
@@ -104,9 +102,21 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
         let currentPhoto = photosFetchedResultsController.object(at: indexPath)
 
-        if let photoImage = currentPhoto.image {
-            cell.photoImageView.image = photoImage
-            cell.photoLoadingActivityIndicator.stopAnimating()
+        if let imageData = currentPhoto.data {
+            if let holdedImage = currentPhoto.image {
+                cell.photoImageView.image = holdedImage
+                cell.photoLoadingActivityIndicator.stopAnimating()
+            } else {
+                DispatchQueue.global(qos: .userInteractive).async {
+                    let image = UIImage(data: imageData)
+                    DispatchQueue.main.async {
+                        // Hold this image for future use.
+                        currentPhoto.image = image
+                        cell.photoImageView.image = image
+                        cell.photoLoadingActivityIndicator.stopAnimating()
+                    }
+                }
+            }
         } else {
             // Request the images and save them into core data.
             cell.photoLoadingActivityIndicator.startAnimating()
@@ -169,8 +179,6 @@ extension PhotoAlbumCollectionViewController: NSFetchedResultsControllerDelegate
         for type: NSFetchedResultsChangeType,
         newIndexPath: IndexPath?
         ) {
-        print("Updating items.")
-
         switch type {
         case .insert:
             collectionView.insertItems(at: [newIndexPath!])

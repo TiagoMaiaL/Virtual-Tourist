@@ -15,22 +15,15 @@ class PhotoMO: NSManagedObject {
 
     // MARK: Properties
 
-    /// The image of this photo entity.
+    /// A transient property holding the loaded image from the store or web.
+    /// - Note: This property it not automatically set, therefore you are in charge of
+    ///         setting this property if it becomes needed.
     var image: UIImage?
 
     // MARK: Life cycle
 
     override func awakeFromInsert() {
         super.awakeFromInsert()
-
         creationDate = Date()
-    }
-
-    override func awakeFromFetch() {
-        super.awakeFromFetch()
-
-        if let data = data, image == nil {
-            image = UIImage(data: data)
-        }
     }
 }
