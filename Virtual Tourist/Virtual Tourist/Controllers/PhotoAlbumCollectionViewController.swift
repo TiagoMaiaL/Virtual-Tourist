@@ -61,23 +61,54 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
         // Download the images, if necessary.
         if !pin.album!.hasImages {
-            flickrService.populatePinWithPhotosFromFlickr(pin) { pin, error in
-                guard error == nil, pin != nil else {
-                    // TODO: Display request failure to user.
-                    print("Error while trying to request and save the images of the album")
-                    return
+            populatePinWithPhotos(pin)
+        }
+    }
+
+    // MARK: Actions
+
+    @IBAction func refreshAlbum(_ sender: UIBarButtonItem) {
+        // Invalidate the delegate of the fetched results controller,
+        // so it doesn't call the update methods (all objects are being invalidated).
+        photosFetchedResultsController.delegate = nil
+
+        // Remove all photos from the album.
+        if let photos = pin.album?.photos {
+            if let photosSet = photos as? Set<PhotoMO> {
+                photosSet.forEach { self.pin.managedObjectContext?.delete($0) }
+            }
+        }
+
+        // TODO: treat the errors in case there's a fetch error.
+        try! photosFetchedResultsController.performFetch()
+        collectionView.reloadData()
+
+        photosFetchedResultsController.delegate = self
+
+        // Fetch them all over again.
+        populatePinWithPhotos(pin)
+    }
+
+    // MARK: Imperatives
+
+    /// Populates the current pin album with the photos from flickr.
+    private func populatePinWithPhotos(_ pin: PinMO) {
+        flickrService.populatePinWithPhotosFromFlickr(pin) { pin, error in
+            guard error == nil, pin != nil else {
+                // TODO: Display request failure to user.
+                print("Error while trying to request and save the images of the album")
+                return
+            }
+
+            print("Finished adding photos to album")
+            DispatchQueue.main.async {
+                do {
+                    try self.photosFetchedResultsController.performFetch()
+                } catch {
+                    // TODO: Display error to the user.
                 }
 
-                print("Finished adding photos to album")
-                DispatchQueue.main.async {
-                    do {
-                        try self.photosFetchedResultsController.performFetch()
-                    } catch {
-                        // TODO: Display error to the user.
-                    }
-
-                    self.collectionView.reloadData()
-                }
+                self.collectionView.reloadData()
             }
         }
     }

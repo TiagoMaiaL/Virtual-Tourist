@@ -78,9 +78,9 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="988" y="26.53673163418291"/>
+            <point key="canvasLocation" x="868" y="27"/>
         </scene>
-        <!--Photo Album Collection View Controller-->
+        <!--Album-->
         <scene sceneID="zPN-zg-ebX">
             <objects>
                 <collectionViewController id="k7G-J2-h9r" customClass="PhotoAlbumCollectionViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
@@ -89,24 +89,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="We2-E5-nhM">
-                            <size key="itemSize" width="178" height="172"/>
+                            <size key="itemSize" width="136" height="135"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="5ZW-Ac-pKa" customClass="PhotoCollectionViewCell" customModule="Virtual_Tourist" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                <rect key="frame" x="0.0" y="0.0" width="136" height="135"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="136" height="135"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sin-lD-KKr">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="136" height="135"/>
                                         </imageView>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="xnx-Xj-ZF3">
-                                            <rect key="frame" x="80" y="80" width="20" height="20"/>
+                                            <rect key="frame" x="58" y="57.5" width="20" height="20"/>
                                             <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </activityIndicatorView>
                                     </subviews>
@@ -120,7 +120,7 @@
                                     <constraint firstItem="xnx-Xj-ZF3" firstAttribute="centerY" secondItem="5ZW-Ac-pKa" secondAttribute="centerY" id="z5Y-0L-Xpb"/>
                                     <constraint firstAttribute="trailing" secondItem="sin-lD-KKr" secondAttribute="trailing" id="zvX-Du-3Vb"/>
                                 </constraints>
-                                <size key="customSize" width="180" height="180"/>
+                                <size key="customSize" width="136" height="135"/>
                                 <connections>
                                     <outlet property="photoImageView" destination="sin-lD-KKr" id="3g8-7w-hhS"/>
                                     <outlet property="photoLoadingActivityIndicator" destination="xnx-Xj-ZF3" id="4va-9f-HIP"/>
@@ -132,13 +132,20 @@
                             <outlet property="delegate" destination="k7G-J2-h9r" id="G1B-nW-tYv"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" title="Album" id="471-Wg-38U">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="Lo7-sq-rUy">
+                            <connections>
+                                <action selector="refreshAlbum:" destination="k7G-J2-h9r" id="Hyy-Iv-G23"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="flowLayout" destination="We2-E5-nhM" id="2us-Ua-Y3p"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TEb-l3-497" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1796" y="26.53673163418291"/>
+            <point key="canvasLocation" x="1679" y="27"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eCs-5Q-g1D">
