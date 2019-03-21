@@ -41,7 +41,7 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         title = pin.placeName
 
         photosFetchedResultsController.delegate = self
-        try! photosFetchedResultsController.performFetch()
+        fetchAlbumPhotos()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -51,8 +51,12 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         do {
             try pin.managedObjectContext?.save()
         } catch {
-            // TODO: Display errors back to the user.
-            print("Error while saving album.")
+            pin.managedObjectContext?.rollback()
+            let alert = makeAlertController(
+                withTitle: "Error",
+                andMessage: "The photos of the album couldn't be saved. Please, make sure you have enough space available in your device."
+            )
+            present(alert, animated: true)
         }
     }
 
@@ -69,7 +73,7 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     @IBAction func refreshAlbum(_ sender: UIBarButtonItem) {
         // Invalidate the delegate of the fetched results controller,
-        // so it doesn't call the update methods (all objects are being invalidated).
+        // so it doesn't call the update methods (all objects are being removed).
         photosFetchedResultsController.delegate = nil
 
         // Remove all photos from the album.
@@ -79,8 +83,8 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
             }
         }
 
-        // TODO: treat the errors in case there's a fetch error.
-        try! photosFetchedResultsController.performFetch()
+        // Clear the current fetch results by making s empty fetch.
+        fetchAlbumPhotos()
         collectionView.reloadData()
 
         photosFetchedResultsController.delegate = self
@@ -91,21 +95,40 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     // MARK: Imperatives
 
+    /// Fetches the photos of the current album.
+    private func fetchAlbumPhotos() {
+        do {
+            try photosFetchedResultsController.performFetch()
+        } catch {
+            let alert = makeAlertController(
+                withTitle: "Error",
+                andMessage: "There was an error while fetching the photos of the album."
+            )
+            present(alert, animated: true)
+        }
+    }
+
     /// Populates the current pin album with the photos from flickr.
     private func populatePinWithPhotos(_ pin: PinMO) {
-        flickrService.populatePinWithPhotosFromFlickr(pin) { pin, error in
+        func displayDownloadError(withMessage message: String) {
+            DispatchQueue.main.async {
+                self.present(self.makeAlertController(withTitle: "Error", andMessage: message), animated: true)
+            }
+        }
+
+        flickrService.populatePinWithPhotosFromFlickr(pin) { [weak self] pin, error in
+            guard let self = self else { return }
+
             guard error == nil, pin != nil else {
-                // TODO: Display request failure to user.
-                print("Error while trying to request and save the images of the album")
+                displayDownloadError(withMessage: "The photos couldn't be downloaded. Please, check your connection and try again later.")
                 return
             }
 
-            print("Finished adding photos to album")
             DispatchQueue.main.async {
                 do {
                     try self.photosFetchedResultsController.performFetch()
                 } catch {
-                    // TODO: Display error to the user.
+                    displayDownloadError(withMessage: "The photos of the album couldn't be saved. Please, make sure you have enough space available in your device.")
                 }
 
                 self.collectionView.reloadData()
@@ -197,11 +220,19 @@ extension PhotoAlbumCollectionViewController: UICollectionViewDelegateFlowLayout
         return CGSize(width: sidesMetric, height: sidesMetric)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+        ) -> CGFloat {
         return 1
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+        ) -> CGFloat {
         return 1
     }
 }

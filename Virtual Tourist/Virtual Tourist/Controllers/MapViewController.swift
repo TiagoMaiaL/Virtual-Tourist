@@ -128,9 +128,7 @@ class MapViewController: UIViewController {
                     }
 
                     self.display(createdPin: createdPin)
-                } catch {
-                    // TODO: display errors to the user.
-                }
+                } catch { /* Fail silently when in the map controller. */ }
             }
         }
     }
@@ -146,9 +144,12 @@ class MapViewController: UIViewController {
         ]
 
         dataController.viewContext.perform {
-            // TODO: Display any errors back to the user.
-            if let pins = try? self.dataController.viewContext.fetch(pinsRequest) {
+            do {
+                let pins = try self.dataController.viewContext.fetch(pinsRequest)
                 self.mapView.addAnnotations(pins.map { PinAnnotation(pin: $0) })
+            } catch {
+                let alert = self.makeAlertController(withTitle: "Error", andMessage: "Couldn't load the added pins.")
+                self.present(alert, animated: true)
             }
         }
     }
