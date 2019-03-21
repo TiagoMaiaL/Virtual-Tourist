@@ -31,12 +31,6 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     // MARK: Life cycle
 
-    deinit {
-        // TODO: Deinitialize everything.
-        // TODO: Make sure there's no strong reference cycle to this controller.
-        // TODO: Update the view context when a background context is saved (use notifications for this).
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -193,9 +187,6 @@ extension PhotoAlbumCollectionViewController: NSFetchedResultsControllerDelegate
         newIndexPath: IndexPath?
         ) {
         switch type {
-        case .insert:
-            collectionView.insertItems(at: [newIndexPath!])
-
         case .delete:
             collectionView.deleteItems(at: [indexPath!])
 

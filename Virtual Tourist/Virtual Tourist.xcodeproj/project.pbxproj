@@ -36,6 +36,8 @@
 		470CE606221466D8005E321F /* AlbumMOStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CE605221466D8005E321F /* AlbumMOStore.swift */; };
 		470CE60822146E10005E321F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470CE60722146E10005E321F /* CoreLocation.framework */; };
 		4734454322238B2000D40298 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4734454222238B2000D40298 /* PhotoCollectionViewCell.swift */; };
+		475839292242DCD00022AD07 /* UIViewControllers+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475839282242DCD00022AD07 /* UIViewControllers+Utils.swift */; };
+		4758392B224315EB0022AD07 /* UIApplication+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4758392A224315EB0022AD07 /* UIApplication+Utils.swift */; };
 		47829D812228924000B633C1 /* CLPlacemark+Naming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47829D802228924000B633C1 /* CLPlacemark+Naming.swift */; };
 		47D9263D222063F70002A59B /* FlickrData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9263C222063F70002A59B /* FlickrData.swift */; };
 /* End PBXBuildFile section */
@@ -86,6 +88,8 @@
 		470CE605221466D8005E321F /* AlbumMOStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMOStore.swift; sourceTree = "<group>"; };
 		470CE60722146E10005E321F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		4734454222238B2000D40298 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		475839282242DCD00022AD07 /* UIViewControllers+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewControllers+Utils.swift"; sourceTree = "<group>"; };
+		4758392A224315EB0022AD07 /* UIApplication+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Utils.swift"; sourceTree = "<group>"; };
 		47829D802228924000B633C1 /* CLPlacemark+Naming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLPlacemark+Naming.swift"; sourceTree = "<group>"; };
 		47D9263C222063F70002A59B /* FlickrData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -294,6 +298,8 @@
 			isa = PBXGroup;
 			children = (
 				47829D802228924000B633C1 /* CLPlacemark+Naming.swift */,
+				475839282242DCD00022AD07 /* UIViewControllers+Utils.swift */,
+				4758392A224315EB0022AD07 /* UIApplication+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -400,12 +406,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				47D9263D222063F70002A59B /* FlickrData.swift in Sources */,
+				475839292242DCD00022AD07 /* UIViewControllers+Utils.swift in Sources */,
 				470CE5D822122DA4005E321F /* DataController.swift in Sources */,
 				470CE5D622122D52005E321F /* PhotoMO.swift in Sources */,
 				470CE5E422137D28005E321F /* APIClient.swift in Sources */,
 				470CE5D422122D47005E321F /* PinMO.swift in Sources */,
 				470CE606221466D8005E321F /* AlbumMOStore.swift in Sources */,
 				470CE60022146672005E321F /* PhotoMOStoreProtocol.swift in Sources */,
+				4758392B224315EB0022AD07 /* UIApplication+Utils.swift in Sources */,
 				470CE5E822137ECE005E321F /* FlickrService+Constants.swift in Sources */,
 				470CE60222146684005E321F /* PhotoMOStore.swift in Sources */,
 				4734454322238B2000D40298 /* PhotoCollectionViewCell.swift in Sources */,

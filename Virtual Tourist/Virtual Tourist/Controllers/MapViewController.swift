@@ -32,6 +32,10 @@ class MapViewController: UIViewController {
 
     // MARK: Life Cycle
 
+    deinit {
+        stopObservingNotifications()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,6 +43,9 @@ class MapViewController: UIViewController {
         precondition(pinStore != nil)
         precondition(albumStore != nil)
         precondition(flickrService != nil)
+
+        startObservingNotification(withName: .NSManagedObjectContextDidSave,
+                                   usingSelector: #selector(updateViewContext(fromNotification:)))
 
         mapView.delegate = self
     }
@@ -69,6 +76,11 @@ class MapViewController: UIViewController {
     }
 
     // MARK: Actions
+
+    /// Updates the view context with the changes of any background context.
+    @objc private func updateViewContext(fromNotification notification: Notification) {
+        dataController.viewContext.mergeChanges(fromContextDidSave: notification)
+    }
 
     @IBAction func addPin(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {

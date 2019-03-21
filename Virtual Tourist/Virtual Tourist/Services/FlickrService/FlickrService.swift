@@ -99,6 +99,8 @@ class FlickrService: FlickrServiceProtocol {
             parameters: parameters,
             headers: nil
         ) { data, error in
+            UIApplication.shared.enableNetworkingActivityIndicator(false)
+
             guard error == nil, let data = data else {
                 handler(nil, error!)
                 return
@@ -112,6 +114,8 @@ class FlickrService: FlickrServiceProtocol {
                 handler(nil, .malformedJsonResponse)
             }
         }
+        UIApplication.shared.enableNetworkingActivityIndicator(true)
+
         task.resume()
     }
 
@@ -124,6 +128,8 @@ class FlickrService: FlickrServiceProtocol {
             parameters: [:],
             headers: [:]
         ) { data, taskError in
+            UIApplication.shared.enableNetworkingActivityIndicator(false)
+
             guard let data = data, taskError == nil else {
                 handler(nil, taskError)
                 return
@@ -136,6 +142,8 @@ class FlickrService: FlickrServiceProtocol {
 
             handler(image, nil)
         }
+        UIApplication.shared.enableNetworkingActivityIndicator(true)
+
         task.resume()
     }
 }
