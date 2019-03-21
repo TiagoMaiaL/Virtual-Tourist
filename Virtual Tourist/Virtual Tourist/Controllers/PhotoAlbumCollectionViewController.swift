@@ -14,6 +14,9 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     // MARK: Properties
 
+    /// The blur view on top of the map background view.
+    @IBOutlet weak var blurView: UIVisualEffectView!
+
     /// The flow layout of the collection view.
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
 
@@ -42,6 +45,8 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
         photosFetchedResultsController.delegate = self
         fetchAlbumPhotos()
+
+        collectionView.contentInset = UIEdgeInsets(top: 350, left: 0, bottom: 0, right: 0)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -254,5 +259,26 @@ extension PhotoAlbumCollectionViewController: NSFetchedResultsControllerDelegate
 
         default: break
         }
+    }
+}
+
+extension PhotoAlbumCollectionViewController {
+
+    // MARK: ScrollView delegate methods
+
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let topOffset = scrollView.contentOffset.y
+
+        if topOffset > -200 {
+            blurView.alpha = 1
+        } else if topOffset <= -200, -350.0 <= topOffset {
+            let alpha = 1 - abs((topOffset + 200) / 150.0)
+            // Never let the alpha value reach 0.
+            blurView.alpha = alpha //alpha == 0 ? 1 : alpha
+        } else {
+            blurView.alpha = 0
+        }
+
+        print(blurView.alpha)
     }
 }
