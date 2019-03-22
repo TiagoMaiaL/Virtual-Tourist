@@ -98,20 +98,20 @@
                             <rect key="frame" x="0.0" y="-64" width="375" height="667"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="nuH-M2-O1b">
-                                    <rect key="frame" x="67" y="269" width="240" height="128"/>
+                                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="nuH-M2-O1b">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 </mapView>
-                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Uc-gc-fG4">
-                                    <rect key="frame" x="67" y="269" width="240" height="128"/>
+                                <visualEffectView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Uc-gc-fG4">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9RB-0W-nd6">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="90Q-oT-Gg9">
-                                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="uoC-E0-o3F">
-                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </view>
                                                 <blurEffect style="light"/>
@@ -123,14 +123,14 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="7Uc-gc-fG4" firstAttribute="leading" secondItem="xGA-M5-9Ww" secondAttribute="leading" id="2uN-wa-dRC"/>
                                 <constraint firstAttribute="bottom" secondItem="nuH-M2-O1b" secondAttribute="bottom" id="3Xy-Sr-cKu"/>
                                 <constraint firstItem="nuH-M2-O1b" firstAttribute="top" secondItem="xGA-M5-9Ww" secondAttribute="top" id="5C1-TW-0Yc"/>
                                 <constraint firstItem="nuH-M2-O1b" firstAttribute="leading" secondItem="xGA-M5-9Ww" secondAttribute="leading" id="9YT-2B-Rxi"/>
-                                <constraint firstAttribute="bottom" secondItem="7Uc-gc-fG4" secondAttribute="bottom" id="CCw-2c-NtZ"/>
-                                <constraint firstItem="7Uc-gc-fG4" firstAttribute="top" secondItem="xGA-M5-9Ww" secondAttribute="top" id="FND-Gj-rMU"/>
+                                <constraint firstItem="7Uc-gc-fG4" firstAttribute="leading" secondItem="xGA-M5-9Ww" secondAttribute="leading" id="Sjo-xr-I6G"/>
+                                <constraint firstItem="7Uc-gc-fG4" firstAttribute="height" secondItem="nuH-M2-O1b" secondAttribute="height" id="igZ-9c-d3U"/>
                                 <constraint firstAttribute="trailing" secondItem="nuH-M2-O1b" secondAttribute="trailing" id="irZ-yH-Jgy"/>
-                                <constraint firstAttribute="trailing" secondItem="7Uc-gc-fG4" secondAttribute="trailing" id="mDM-1y-ZLn"/>
+                                <constraint firstItem="7Uc-gc-fG4" firstAttribute="width" secondItem="nuH-M2-O1b" secondAttribute="width" id="k4M-HV-GEe"/>
+                                <constraint firstItem="7Uc-gc-fG4" firstAttribute="top" secondItem="xGA-M5-9Ww" secondAttribute="top" id="pm3-eN-qhA"/>
                             </constraints>
                         </view>
                         <cells>
@@ -179,13 +179,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backgroundMapView" destination="nuH-M2-O1b" id="SkC-XF-r6L"/>
                         <outlet property="blurView" destination="7Uc-gc-fG4" id="Mpe-92-WFG"/>
-                        <outlet property="flowLayout" destination="We2-E5-nhM" id="2us-Ua-Y3p"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TEb-l3-497" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1679" y="27"/>
+            <point key="canvasLocation" x="1677.5999999999999" y="26.53673163418291"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eCs-5Q-g1D">

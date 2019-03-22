@@ -8,17 +8,12 @@
 
 import UIKit
 import CoreData
+import MapKit
 
 /// The controller in charge of presenting the photo album with images from Flickr.
 class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     // MARK: Properties
-
-    /// The blur view on top of the map background view.
-    @IBOutlet weak var blurView: UIVisualEffectView!
-
-    /// The flow layout of the collection view.
-    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
 
     /// The reuse identifier of the collection cells.
     private let reuseIdentifier = "photoCell"
@@ -31,6 +26,15 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     /// The fetched results controller in charge of populating the collection view.
     var photosFetchedResultsController: NSFetchedResultsController<PhotoMO>!
+
+    /// The blur view on top of the map background view.
+    @IBOutlet weak var blurView: UIVisualEffectView!
+
+    /// The map view in the backgroud.
+    @IBOutlet weak var backgroundMapView: MKMapView!
+
+    /// The top inset of the collection view, so it displays map view when in the top.
+    var mapTopInset: CGFloat!
 
     // MARK: Life cycle
 
@@ -46,7 +50,8 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         photosFetchedResultsController.delegate = self
         fetchAlbumPhotos()
 
-        collectionView.contentInset = UIEdgeInsets(top: 350, left: 0, bottom: 0, right: 0)
+        mapTopInset = 6 * (view.frame.size.height / 8)
+        collectionView.contentInset = UIEdgeInsets(top: mapTopInset, left: 0, bottom: 0, right: 0)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -267,18 +272,19 @@ extension PhotoAlbumCollectionViewController {
     // MARK: ScrollView delegate methods
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetAlphaRange = (min: CGFloat(mapTopInset * -0.95), max: CGFloat(mapTopInset * -0.8))
         let topOffset = scrollView.contentOffset.y
 
-        if topOffset > -200 {
-            blurView.alpha = 1
-        } else if topOffset <= -200, -350.0 <= topOffset {
-            let alpha = 1 - abs((topOffset + 200) / 150.0)
-            // Never let the alpha value reach 0.
-            blurView.alpha = alpha //alpha == 0 ? 1 : alpha
-        } else {
+        if topOffset <= offsetAlphaRange.min {
             blurView.alpha = 0
-        }
 
-        print(blurView.alpha)
+        } else if topOffset <= offsetAlphaRange.max, topOffset > offsetAlphaRange.min {
+            let difference = abs(offsetAlphaRange.min) - abs(offsetAlphaRange.max)
+            let alpha = 1 - (abs(topOffset) + offsetAlphaRange.max) / difference
+            blurView.alpha = alpha
+
+        } else {
+            blurView.alpha = 1
+        }
     }
 }
