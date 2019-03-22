@@ -47,11 +47,10 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
         title = pin.placeName
 
+        configureFlowLayout()
+
         photosFetchedResultsController.delegate = self
         fetchAlbumPhotos()
-
-        mapTopInset = 6 * (view.frame.size.height / 8)
-        collectionView.contentInset = UIEdgeInsets(top: mapTopInset, left: 0, bottom: 0, right: 0)
 
         backgroundMapView.addAnnotation(PinAnnotation(pin: pin))
     }
@@ -155,7 +154,36 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         }
     }
 
-    // MARK: UICollectionViewDataSource
+    /// Configures the collection view layout.
+    private func configureFlowLayout() {
+        mapTopInset = 6 * (view.frame.size.height / 8)
+        collectionView.contentInset = UIEdgeInsets(top: mapTopInset, left: 0, bottom: 0, right: 0)
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.minimumLineSpacing = 1
+            flowLayout.minimumInteritemSpacing = 1
+
+            let sidesMetric = (collectionView.frame.width / 3) - 1 // 1 px of padding between the cells.
+            flowLayout.itemSize = CGSize(width: sidesMetric, height: sidesMetric)
+
+            flowLayout.headerReferenceSize = CGSize(width: collectionView.frame.width, height: 51)
+        }
+
+        collectionView.register(
+            UINib(nibName: "AlbumSectionHeaderView", bundle: nil),
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "Header view"
+        )
+    }
+
+    /// Scrolls the collection view to the album photos.
+    @objc private func scrollToAlbumPhotos() {
+        collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
+}
+
+extension PhotoAlbumCollectionViewController {
+
+    // MARK: UICollectionView data source methods
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return photosFetchedResultsController.sections?.count ?? 1
@@ -226,33 +254,18 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
         currentPhoto.album = nil
         photosFetchedResultsController.managedObjectContext.delete(currentPhoto)
     }
-}
 
-extension PhotoAlbumCollectionViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(
+    override func collectionView(
         _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-        ) -> CGSize {
-        let sidesMetric = (collectionView.frame.size.width / 3) - 1 // 1 px of padding between the cells.
-        return CGSize(width: sidesMetric, height: sidesMetric)
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumLineSpacingForSectionAt section: Int
-        ) -> CGFloat {
-        return 1
-    }
-
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumInteritemSpacingForSectionAt section: Int
-        ) -> CGFloat {
-        return 1
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+        ) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                         withReuseIdentifier: "Header view",
+                                                                         for: indexPath)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(scrollToAlbumPhotos))
+        headerView.addGestureRecognizer(tapRecognizer)
+        return headerView
     }
 }
 
