@@ -281,7 +281,7 @@ extension PhotoAlbumCollectionViewController {
     // MARK: ScrollView delegate methods
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetAlphaRange = (min: CGFloat(mapTopInset * -0.95), max: CGFloat(mapTopInset * -0.8))
+        let offsetAlphaRange = (min: CGFloat(mapTopInset * -0.95), max: CGFloat(mapTopInset * -0.4))
         let topOffset = scrollView.contentOffset.y
 
         if topOffset <= offsetAlphaRange.min {
@@ -294,6 +294,37 @@ extension PhotoAlbumCollectionViewController {
 
         } else {
             blurView.alpha = 1
+        }
+    }
+}
+
+extension PhotoAlbumCollectionViewController: MKMapViewDelegate {
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        view.isDraggable = true
+
+        return view
+    }
+
+    func mapView(
+        _ mapView: MKMapView,
+        annotationView view: MKAnnotationView,
+        didChange newState: MKAnnotationView.DragState,
+        fromOldState oldState: MKAnnotationView.DragState
+        ) {
+        switch newState {
+        case .starting:
+            view.dragState = .dragging
+
+        case .canceling, .ending:
+            view.dragState = .none
+            // Finish the drag by setting the coordinates of the pin managed object.
+            guard let coordinate = view.annotation?.coordinate else { preconditionFailure() }
+            pin.latitude = coordinate.latitude
+            pin.longitude = coordinate.longitude
+
+        default: break
         }
     }
 }

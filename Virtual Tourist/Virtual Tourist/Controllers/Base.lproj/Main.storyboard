@@ -100,6 +100,9 @@
                             <subviews>
                                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="nuH-M2-O1b">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="k7G-J2-h9r" id="Moq-Og-EcH"/>
+                                    </connections>
                                 </mapView>
                                 <visualEffectView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Uc-gc-fG4">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
