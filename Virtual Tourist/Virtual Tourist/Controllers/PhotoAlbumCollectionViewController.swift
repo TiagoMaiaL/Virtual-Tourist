@@ -52,6 +52,8 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
         mapTopInset = 6 * (view.frame.size.height / 8)
         collectionView.contentInset = UIEdgeInsets(top: mapTopInset, left: 0, bottom: 0, right: 0)
+
+        backgroundMapView.addAnnotation(PinAnnotation(pin: pin))
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -72,6 +74,13 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        let pinAnnotation = backgroundMapView.annotations.first!
+        backgroundMapView.setRegion(
+            MKCoordinateRegion(center: pinAnnotation.coordinate,
+                               span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)),
+            animated: true
+        )
 
         // Download the images, if necessary.
         if !pin.album!.hasImages {
