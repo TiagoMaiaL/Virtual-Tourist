@@ -30,9 +30,6 @@ class PhotoAlbumViewController: UIViewController {
     /// The blur view on top of the map background view.
     @IBOutlet weak var blurView: UIVisualEffectView!
 
-    /// The map view in the backgroud.
-    @IBOutlet weak var backgroundMapView: MKMapView!
-
     /// The photo album collection view.
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -54,8 +51,6 @@ class PhotoAlbumViewController: UIViewController {
 
         photosFetchedResultsController.delegate = self
         fetchAlbumPhotos()
-
-        backgroundMapView.addAnnotation(PinAnnotation(pin: pin))
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -77,16 +72,20 @@ class PhotoAlbumViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        let pinAnnotation = backgroundMapView.annotations.first!
-        backgroundMapView.setRegion(
-            MKCoordinateRegion(center: pinAnnotation.coordinate,
-                               span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)),
-            animated: true
-        )
-
         // Download the images, if necessary.
         if !pin.album!.hasImages {
             populatePinWithPhotos(pin)
+        }
+    }
+
+    // MARK: Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == SegueIdentifiers.ShowDetailsMap {
+            guard let detailsMapController = segue.destination as? DetailsMapViewController else {
+                preconditionFailure("There must be a details map controller.")
+            }
+            detailsMapController.pin = pin
         }
     }
 
@@ -167,6 +166,7 @@ class PhotoAlbumViewController: UIViewController {
 
             let sidesMetric = (collectionView.frame.width / 3) - 1 // 1 px of padding between the cells.
             flowLayout.itemSize = CGSize(width: sidesMetric, height: sidesMetric)
+            flowLayout.headerReferenceSize = CGSize(width: collectionView.frame.width, height: 50)
         }
 
         collectionView.register(
@@ -273,17 +273,6 @@ extension PhotoAlbumViewController: UICollectionViewDataSource, UICollectionView
     }
 }
 
-extension PhotoAlbumViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-        ) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 50)
-    }
-}
-
 extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate {
 
     // MARK: Fetched results controller delegate methods
@@ -322,37 +311,6 @@ extension PhotoAlbumViewController {
 
         } else {
             blurView.alpha = 1
-        }
-    }
-}
-
-extension PhotoAlbumViewController: MKMapViewDelegate {
-
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
-        view.isDraggable = true
-
-        return view
-    }
-
-    func mapView(
-        _ mapView: MKMapView,
-        annotationView view: MKAnnotationView,
-        didChange newState: MKAnnotationView.DragState,
-        fromOldState oldState: MKAnnotationView.DragState
-        ) {
-        switch newState {
-        case .starting:
-            view.dragState = .dragging
-
-        case .canceling, .ending:
-            view.dragState = .none
-            // Finish the drag by setting the coordinates of the pin managed object.
-            guard let coordinate = view.annotation?.coordinate else { preconditionFailure() }
-            pin.latitude = coordinate.latitude
-            pin.longitude = coordinate.longitude
-
-        default: break
         }
     }
 }
