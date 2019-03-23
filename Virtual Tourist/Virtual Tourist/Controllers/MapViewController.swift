@@ -60,7 +60,7 @@ class MapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SegueIdentifiers.ShowPhotoAlbum {
             guard let selectedPinAnnotation = mapView.selectedAnnotations.first as? PinAnnotation,
-                let albumController = segue.destination as? PhotoAlbumCollectionViewController else {
+                let albumController = segue.destination as? PhotoAlbumViewController else {
                     assertionFailure("Couldn't prepare the album controller.")
                     return
             }

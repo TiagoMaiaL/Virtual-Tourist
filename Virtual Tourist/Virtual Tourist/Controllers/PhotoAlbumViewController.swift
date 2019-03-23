@@ -1,5 +1,5 @@
 //
-//  PhotoAlbumCollectionViewController.swift
+//  PhotoAlbumViewController.swift
 //  Virtual Tourist
 //
 //  Created by Tiago Maia Lopes on 11/02/19.
@@ -11,7 +11,7 @@ import CoreData
 import MapKit
 
 /// The controller in charge of presenting the photo album with images from Flickr.
-class PhotoAlbumCollectionViewController: UICollectionViewController {
+class PhotoAlbumViewController: UIViewController {
 
     // MARK: Properties
 
@@ -32,6 +32,9 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
     /// The map view in the backgroud.
     @IBOutlet weak var backgroundMapView: MKMapView!
+
+    /// The photo album collection view.
+    @IBOutlet weak var collectionView: UICollectionView!
 
     /// The top inset of the collection view, so it displays map view when in the top.
     var mapTopInset: CGFloat!
@@ -101,8 +104,8 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
             }
         }
 
-        // Clear the current fetch results by making s empty fetch.
         fetchAlbumPhotos()
+
         collectionView.reloadData()
 
         photosFetchedResultsController.delegate = self
@@ -164,8 +167,6 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
 
             let sidesMetric = (collectionView.frame.width / 3) - 1 // 1 px of padding between the cells.
             flowLayout.itemSize = CGSize(width: sidesMetric, height: sidesMetric)
-
-            flowLayout.headerReferenceSize = CGSize(width: collectionView.frame.width, height: 51)
         }
 
         collectionView.register(
@@ -181,19 +182,19 @@ class PhotoAlbumCollectionViewController: UICollectionViewController {
     }
 }
 
-extension PhotoAlbumCollectionViewController {
+extension PhotoAlbumViewController: UICollectionViewDataSource, UICollectionViewDelegate {
 
     // MARK: UICollectionView data source methods
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return photosFetchedResultsController.sections?.count ?? 1
     }
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photosFetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: reuseIdentifier,
             for: indexPath
@@ -248,14 +249,14 @@ extension PhotoAlbumCollectionViewController {
         return cell
     }
 
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let currentPhoto = photosFetchedResultsController.object(at: indexPath)
         // Remove the image from the album.
         currentPhoto.album = nil
         photosFetchedResultsController.managedObjectContext.delete(currentPhoto)
     }
 
-    override func collectionView(
+    func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
@@ -263,13 +264,27 @@ extension PhotoAlbumCollectionViewController {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                          withReuseIdentifier: "Header view",
                                                                          for: indexPath)
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(scrollToAlbumPhotos))
-        headerView.addGestureRecognizer(tapRecognizer)
+        if (headerView.gestureRecognizers ?? []).count == 0 {
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(scrollToAlbumPhotos))
+            headerView.addGestureRecognizer(tapRecognizer)
+        }
+
         return headerView
     }
 }
 
-extension PhotoAlbumCollectionViewController: NSFetchedResultsControllerDelegate {
+extension PhotoAlbumViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+        ) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 50)
+    }
+}
+
+extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate {
 
     // MARK: Fetched results controller delegate methods
 
@@ -289,11 +304,11 @@ extension PhotoAlbumCollectionViewController: NSFetchedResultsControllerDelegate
     }
 }
 
-extension PhotoAlbumCollectionViewController {
+extension PhotoAlbumViewController {
 
     // MARK: ScrollView delegate methods
 
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetAlphaRange = (min: CGFloat(mapTopInset * -0.95), max: CGFloat(mapTopInset * -0.4))
         let topOffset = scrollView.contentOffset.y
 
@@ -311,7 +326,7 @@ extension PhotoAlbumCollectionViewController {
     }
 }
 
-extension PhotoAlbumCollectionViewController: MKMapViewDelegate {
+extension PhotoAlbumViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
