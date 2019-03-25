@@ -50,7 +50,12 @@ class PhotoAlbumDisplayerViewController: UIViewController {
         configureFlowLayout()
 
         photosFetchedResultsController.delegate = self
-        fetchAlbumPhotos()
+//        displayAlbum()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        displayAlbum()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -132,7 +137,7 @@ extension PhotoAlbumDisplayerViewController: UICollectionViewDataSource, UIColle
     // MARK: UICollectionView data source methods
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return photosFetchedResultsController.sections?.count ?? 1
+        return (photosFetchedResultsController.sections ?? []).isEmpty ? 0 : 1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -213,6 +218,8 @@ extension PhotoAlbumDisplayerViewController: UICollectionViewDataSource, UIColle
             let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(scrollToAlbumPhotos))
             headerView.addGestureRecognizer(tapRecognizer)
         }
+
+        headerView.alpha = (photosFetchedResultsController.fetchedObjects ?? []).isEmpty ? 0 : 1
 
         return headerView
     }

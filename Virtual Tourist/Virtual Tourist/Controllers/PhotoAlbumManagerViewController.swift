@@ -85,7 +85,10 @@ class PhotoAlbumManagerViewController: UIViewController {
         precondition(flickrService != nil)
 
         informationViewHeightConstraint.constant = 2 * (view.frame.height / 8)
-        enableInformationView(false)
+
+        /// Manually disable the information view without animations.
+        informationViewBottomConstraint.constant = informationViewHeightConstraint.constant
+        view.layoutIfNeeded()
     }
 
     override func viewDidAppear(_ animated: Bool) {
