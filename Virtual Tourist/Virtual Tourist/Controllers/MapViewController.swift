@@ -58,20 +58,18 @@ class MapViewController: UIViewController {
     // MARK: Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SegueIdentifiers.ShowPhotoAlbum {
+        if segue.identifier == SegueIdentifiers.ShowPhotoAlbumManager {
             guard let selectedPinAnnotation = mapView.selectedAnnotations.first as? PinAnnotation,
-                let albumController = segue.destination as? PhotoAlbumViewController else {
+                let albumManagerController = segue.destination as? PhotoAlbumManagerViewController else {
                     assertionFailure("Couldn't prepare the album controller.")
                     return
             }
             let selectedPin = selectedPinAnnotation.pin
-
-            albumController.photosFetchedResultsController = albumStore.photoStore.getPhotosFetchedResultsController(
-                fromAlbum: selectedPin.album!,
-                fetchingFromContext: dataController.viewContext
-            )
-            albumController.pin = selectedPin
-            albumController.flickrService = flickrService
+            
+            albumManagerController.pin = selectedPin
+            albumManagerController.flickrService = flickrService
+            albumManagerController.dataController = dataController
+            albumManagerController.photoStore = albumStore.photoStore
         }
     }
 
@@ -170,6 +168,6 @@ extension MapViewController: MKMapViewDelegate {
             return
         }
 
-        performSegue(withIdentifier: SegueIdentifiers.ShowPhotoAlbum, sender: self)
+        performSegue(withIdentifier: SegueIdentifiers.ShowPhotoAlbumManager, sender: self)
     }
 }

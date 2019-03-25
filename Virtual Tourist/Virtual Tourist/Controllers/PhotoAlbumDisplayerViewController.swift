@@ -1,5 +1,5 @@
 //
-//  PhotoAlbumViewController.swift
+//  PhotoAlbumDisplayerViewController.swift
 //  Virtual Tourist
 //
 //  Created by Tiago Maia Lopes on 11/02/19.
@@ -10,8 +10,8 @@ import UIKit
 import CoreData
 import MapKit
 
-/// The controller in charge of presenting the photo album with images from Flickr.
-class PhotoAlbumViewController: UIViewController {
+/// The controller in charge of presenting the photo album with the pin images.
+class PhotoAlbumDisplayerViewController: UIViewController {
 
     // MARK: Properties
 
@@ -69,15 +69,6 @@ class PhotoAlbumViewController: UIViewController {
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        // Download the images, if necessary.
-        if !pin.album!.hasImages {
-            populatePinWithPhotos(pin)
-        }
-    }
-
     // MARK: Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -89,31 +80,13 @@ class PhotoAlbumViewController: UIViewController {
         }
     }
 
-    // MARK: Actions
-
-    @IBAction func refreshAlbum(_ sender: UIBarButtonItem) {
-        // Invalidate the delegate of the fetched results controller,
-        // so it doesn't call the update methods (all objects are being removed).
-        photosFetchedResultsController.delegate = nil
-
-        // Remove all photos from the album.
-        if let photos = pin.album?.photos {
-            if let photosSet = photos as? Set<PhotoMO> {
-                photosSet.forEach { self.pin.managedObjectContext?.delete($0) }
-            }
-        }
-
-        fetchAlbumPhotos()
-
-        collectionView.reloadData()
-
-        photosFetchedResultsController.delegate = self
-
-        // Fetch them all over again.
-        populatePinWithPhotos(pin)
-    }
-
     // MARK: Imperatives
+
+    /// Fetches and displays the album photos.
+    func displayAlbum() {
+        fetchAlbumPhotos()
+        collectionView.reloadData()
+    }
 
     /// Fetches the photos of the current album.
     private func fetchAlbumPhotos() {
@@ -125,34 +98,6 @@ class PhotoAlbumViewController: UIViewController {
                 andMessage: "There was an error while fetching the photos of the album."
             )
             present(alert, animated: true)
-        }
-    }
-
-    /// Populates the current pin album with the photos from flickr.
-    private func populatePinWithPhotos(_ pin: PinMO) {
-        func displayDownloadError(withMessage message: String) {
-            DispatchQueue.main.async {
-                self.present(self.makeAlertController(withTitle: "Error", andMessage: message), animated: true)
-            }
-        }
-
-        flickrService.populatePinWithPhotosFromFlickr(pin) { [weak self] pin, error in
-            guard let self = self else { return }
-
-            guard error == nil, pin != nil else {
-                displayDownloadError(withMessage: "The photos couldn't be downloaded. Please, check your connection and try again later.")
-                return
-            }
-
-            DispatchQueue.main.async {
-                do {
-                    try self.photosFetchedResultsController.performFetch()
-                } catch {
-                    displayDownloadError(withMessage: "The photos of the album couldn't be saved. Please, make sure you have enough space available in your device.")
-                }
-
-                self.collectionView.reloadData()
-            }
         }
     }
 
@@ -182,7 +127,7 @@ class PhotoAlbumViewController: UIViewController {
     }
 }
 
-extension PhotoAlbumViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension PhotoAlbumDisplayerViewController: UICollectionViewDataSource, UICollectionViewDelegate {
 
     // MARK: UICollectionView data source methods
 
@@ -273,7 +218,7 @@ extension PhotoAlbumViewController: UICollectionViewDataSource, UICollectionView
     }
 }
 
-extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate {
+extension PhotoAlbumDisplayerViewController: NSFetchedResultsControllerDelegate {
 
     // MARK: Fetched results controller delegate methods
 
@@ -293,7 +238,7 @@ extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
-extension PhotoAlbumViewController {
+extension PhotoAlbumDisplayerViewController {
 
     // MARK: ScrollView delegate methods
 

@@ -16,7 +16,8 @@ extension UIViewController {
 
     enum SegueIdentifiers {
         static let ShowMap = "Show map"
-        static let ShowPhotoAlbum = "Show album"
+        static let ShowPhotoAlbumManager = "Show photo album manager"
+        static let ShowPhotoAlbumDisplayer = "Show photo album displayer"
         static let ShowDetailsMap = "Show details map"
     }
 }
