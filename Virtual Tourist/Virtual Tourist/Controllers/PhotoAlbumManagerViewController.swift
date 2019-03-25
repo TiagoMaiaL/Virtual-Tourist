@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 /// Controller in charge of downloading the images from Flickr and
 /// displaying them using the photo album displayer controller.
@@ -106,17 +107,35 @@ class PhotoAlbumManagerViewController: UIViewController {
         super.viewWillDisappear(animated)
         // TODO: Save the view context.
 
+        func displayFetchError() {
+            let alert = self.makeAlertController(
+                withTitle: "Error",
+                andMessage: "The photos of the album couldn't be saved. Please, make sure you have enough space available in your device."
+            )
+            self.present(alert, animated: true)
+        }
+
         // Save any images into core data.
-//        do {
-//            try pin.managedObjectContext?.save()
-//        } catch {
-//            pin.managedObjectContext?.rollback()
-//            let alert = makeAlertController(
-//                withTitle: "Error",
-//                andMessage: "The photos of the album couldn't be saved. Please, make sure you have enough space available in your device."
-//            )
-//            present(alert, animated: true)
-//        }
+        let backgroundContextForSaving = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        backgroundContextForSaving.parent = dataController.viewContext
+
+        backgroundContextForSaving.perform {
+            do {
+                try self.pin.managedObjectContext?.save()
+
+                self.dataController.viewContext.performAndWait {
+                    do {
+                        try self.dataController.viewContext.save()
+                    } catch {
+                        self.dataController.viewContext.rollback()
+                        displayFetchError()
+                    }
+                }
+            } catch {
+                self.pin.managedObjectContext?.rollback()
+                displayFetchError()
+            }
+        }
     }
 
     // MARK: Navigation
