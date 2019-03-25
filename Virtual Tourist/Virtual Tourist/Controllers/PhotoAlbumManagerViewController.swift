@@ -84,6 +84,8 @@ class PhotoAlbumManagerViewController: UIViewController {
         precondition(pin != nil)
         precondition(flickrService != nil)
 
+        title = pin.placeName
+
         informationViewHeightConstraint.constant = 2 * (view.frame.height / 8)
 
         /// Manually disable the information view without animations.
@@ -98,6 +100,23 @@ class PhotoAlbumManagerViewController: UIViewController {
         if !pin.album!.hasImages {
             populatePinWithPhotos(pin)
         }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // TODO: Save the view context.
+
+        // Save any images into core data.
+//        do {
+//            try pin.managedObjectContext?.save()
+//        } catch {
+//            pin.managedObjectContext?.rollback()
+//            let alert = makeAlertController(
+//                withTitle: "Error",
+//                andMessage: "The photos of the album couldn't be saved. Please, make sure you have enough space available in your device."
+//            )
+//            present(alert, animated: true)
+//        }
     }
 
     // MARK: Navigation
@@ -120,7 +139,7 @@ class PhotoAlbumManagerViewController: UIViewController {
 
     // MARK: Actions
 
-    @IBAction func refreshAlbum(_ sender: UIBarButtonItem) {
+    @IBAction func refreshAlbum(_ sender: UIBarButtonItem? = nil) {
         // Remove all photos from the album.
         if let photos = pin.album?.photos {
             if let photosSet = photos as? Set<PhotoMO> {
@@ -129,6 +148,25 @@ class PhotoAlbumManagerViewController: UIViewController {
         }
 
         populatePinWithPhotos(pin)
+    }
+
+    @IBAction func editPinName(_ sender: UIBarButtonItem) {
+        // Display an alert view with a text field.
+        let alert = makeAlertController(
+            withTitle: "Edit pin name",
+            andMessage: "Change the location name to get more accurate photos in your album."
+        )
+        alert.addTextField()
+        alert.addAction(UIAlertAction(title: "Edit", style: .default) { action in
+            if let newName = alert.textFields?.first?.text, !newName.isEmpty {
+                self.pin.placeName = newName
+                self.title = newName
+                self.refreshAlbum()
+            }
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        present(alert, animated: true)
     }
 
     // MARK: imperatives

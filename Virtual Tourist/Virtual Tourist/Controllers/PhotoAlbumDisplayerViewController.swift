@@ -45,33 +45,14 @@ class PhotoAlbumDisplayerViewController: UIViewController {
         precondition(flickrService != nil)
         precondition(photosFetchedResultsController != nil)
 
-        title = pin.placeName
-
         configureFlowLayout()
 
         photosFetchedResultsController.delegate = self
-//        displayAlbum()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         displayAlbum()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        // Save any images into core data.
-        do {
-            try pin.managedObjectContext?.save()
-        } catch {
-            pin.managedObjectContext?.rollback()
-            let alert = makeAlertController(
-                withTitle: "Error",
-                andMessage: "The photos of the album couldn't be saved. Please, make sure you have enough space available in your device."
-            )
-            present(alert, animated: true)
-        }
     }
 
     // MARK: Navigation

@@ -270,11 +270,18 @@
                         <viewLayoutGuide key="safeArea" id="Ls1-o1-rpn"/>
                     </view>
                     <navigationItem key="navigationItem" title="Photo Album" id="PSj-4V-Qyn">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="6vg-Ih-9Ps">
-                            <connections>
-                                <action selector="refreshAlbum:" destination="KGB-2d-0QC" id="O9h-CK-SNd"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="6vg-Ih-9Ps">
+                                <connections>
+                                    <action selector="refreshAlbum:" destination="KGB-2d-0QC" id="O9h-CK-SNd"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="edit" id="w64-2E-1e8">
+                                <connections>
+                                    <action selector="editPinName:" destination="KGB-2d-0QC" id="Nbq-P8-Ljr"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="informationLabel" destination="hYq-h1-ntj" id="xoE-pw-bpL"/>
