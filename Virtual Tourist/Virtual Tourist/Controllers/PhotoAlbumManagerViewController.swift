@@ -45,16 +45,34 @@ class PhotoAlbumManagerViewController: UIViewController {
             switch viewState {
             case .displayingAlbumm:
                 // Simply update the display.
+                enableInformationView(false)
                 break
+
             case .doesNotHavePhotos:
-                // Show no photos view
-                break
+                enableInformationView(true)
+                loadingActivityIndicator.stopAnimating()
+                informationLabel.text = "There are no photos for this pin. Please, try changing its location or name."
+
             case .loadingAlbum:
-                // Show loading view
-                break
+                enableInformationView(true)
+                loadingActivityIndicator.startAnimating()
+                informationLabel.text = "Loading album photos..."
             }
         }
     }
+
+    /// The label used to inform whether the album is being loaded or doesn't have photos.
+    @IBOutlet weak var informationLabel: UILabel!
+
+    /// The view informing that the album is being loaded.
+    @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
+
+    /// The height constraint of the support information view, used to adjust it to the screen,
+    /// instead of a hard coded value.
+    @IBOutlet weak var informationViewHeightConstraint: NSLayoutConstraint!
+
+    /// The bottom constraint of the support information view, used to animate its display.
+    @IBOutlet weak var informationViewBottomConstraint: NSLayoutConstraint!
 
     // MARK: Life Cycle
 
@@ -65,6 +83,9 @@ class PhotoAlbumManagerViewController: UIViewController {
         precondition(photoStore != nil)
         precondition(pin != nil)
         precondition(flickrService != nil)
+
+        informationViewHeightConstraint.constant = 2 * (view.frame.height / 8)
+        enableInformationView(false)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -74,10 +95,6 @@ class PhotoAlbumManagerViewController: UIViewController {
         if !pin.album!.hasImages {
             populatePinWithPhotos(pin)
         }
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
     }
 
     // MARK: Navigation
@@ -134,10 +151,16 @@ class PhotoAlbumManagerViewController: UIViewController {
 
             DispatchQueue.main.async {
                 self.viewState = self.pin.album!.hasImages ? .displayingAlbumm : .doesNotHavePhotos
-
-                // TODO: Hide the loading view.
-                // TODO: Show the empty state, if there's no photos in the album.
             }
+        }
+    }
+
+    /// Handles the display of the information container view.
+    private func enableInformationView(_ isEnabled: Bool) {
+        informationViewBottomConstraint.constant = isEnabled ? 0 : informationViewHeightConstraint.constant
+
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
         }
     }
 }

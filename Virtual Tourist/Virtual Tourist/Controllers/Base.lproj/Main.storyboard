@@ -229,16 +229,16 @@
                                         <blurEffect style="light"/>
                                     </visualEffectView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Vk7-bv-Uzt">
-                                        <rect key="frame" x="125" y="36" width="125.5" height="56.5"/>
+                                        <rect key="frame" x="28" y="36" width="319" height="56.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYq-h1-ntj">
-                                                <rect key="frame" x="0.0" y="0.0" width="125.5" height="21.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading photos..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYq-h1-ntj">
+                                                <rect key="frame" x="0.0" y="0.0" width="319" height="21.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Cpj-hx-COh">
-                                                <rect key="frame" x="52.5" y="36.5" width="20" height="20"/>
+                                                <rect key="frame" x="149.5" y="36.5" width="20" height="20"/>
                                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </activityIndicatorView>
                                         </subviews>
@@ -250,6 +250,7 @@
                                     <constraint firstAttribute="height" constant="128" id="RJF-MJ-hlu"/>
                                     <constraint firstAttribute="trailing" secondItem="DVe-P0-vFe" secondAttribute="trailing" id="dlD-8b-y6W"/>
                                     <constraint firstItem="DVe-P0-vFe" firstAttribute="top" secondItem="kUl-uh-auQ" secondAttribute="top" id="ps9-L6-bF4"/>
+                                    <constraint firstItem="hYq-h1-ntj" firstAttribute="width" secondItem="kUl-uh-auQ" secondAttribute="width" multiplier="0.85" id="tgU-oe-IHP"/>
                                     <constraint firstItem="Vk7-bv-Uzt" firstAttribute="centerX" secondItem="kUl-uh-auQ" secondAttribute="centerX" id="trZ-HG-2es"/>
                                     <constraint firstItem="Vk7-bv-Uzt" firstAttribute="centerY" secondItem="kUl-uh-auQ" secondAttribute="centerY" id="vyb-BR-oc4"/>
                                     <constraint firstAttribute="bottom" secondItem="DVe-P0-vFe" secondAttribute="bottom" id="xNF-X9-amt"/>
@@ -275,6 +276,12 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="informationLabel" destination="hYq-h1-ntj" id="xoE-pw-bpL"/>
+                        <outlet property="informationViewBottomConstraint" destination="g6G-AU-cO2" id="rUc-WR-caV"/>
+                        <outlet property="informationViewHeightConstraint" destination="RJF-MJ-hlu" id="H4J-3B-8RR"/>
+                        <outlet property="loadingActivityIndicator" destination="Cpj-hx-COh" id="AY7-Gb-Ied"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k11-p6-Od7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
