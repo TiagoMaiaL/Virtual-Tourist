@@ -97,20 +97,23 @@ class PhotoAlbumManagerViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        print("On album with images status: \(pin.album!.hasImages)")
         // Request photos if necessary.
         if !pin.album!.hasImages {
             populatePinWithPhotos(pin)
+
+        } else if albumDisplayerController.collectionView.visibleCells.isEmpty {
+            // If for some reason the cells aren't being displayed, display them.
+            viewState = .displayingAlbumm
         }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // TODO: Save the view context.
 
         func displayFetchError() {
-            let alert = self.makeAlertController(
-                withTitle: "Error",
-                andMessage: "The photos of the album couldn't be saved. Please, make sure you have enough space available in your device."
+            let alert = self.makeErrorAlertController(
+                withMessage: "The photos of the album couldn't be saved. Please, make sure you have enough space available in your device."
             )
             self.present(alert, animated: true)
         }
@@ -197,7 +200,7 @@ class PhotoAlbumManagerViewController: UIViewController {
         func displayDownloadError(withMessage message: String) {
             DispatchQueue.main.async {
                 self.viewState = self.pin.album!.hasImages ? .displayingAlbumm : .doesNotHavePhotos
-                self.present(self.makeAlertController(withTitle: "Error", andMessage: message), animated: true)
+                self.present(self.makeErrorAlertController(withMessage: message), animated: true)
             }
         }
 

@@ -12,7 +12,13 @@ import UIKit
 /// A service in charge of getting and persisting any external resources from Flickr, using its API.
 class FlickrService: FlickrServiceProtocol {
 
+    /// The completion handler called when a photos request finishes.
+    private typealias photosRequestCompletionHandler = (PinMO?, Error?) -> Void
+
     // MARK: Properties
+
+    /// The photos completion handlers associated with a request for photos of an specific pin album.
+    private var photosRequestHandlers: [PinMO: [photosRequestCompletionHandler]] = [:]
 
     /// The flickr API key.
     private let flickrAPIKey: String
@@ -53,23 +59,40 @@ class FlickrService: FlickrServiceProtocol {
         ) {
         let pinObjectID = pin.objectID
 
-        requestImages(relatedToPin: pin) { flickrResponseData, taskError in
-            guard taskError == nil, let flickrResponseData = flickrResponseData else {
-                handler(nil, taskError!)
-                return
-            }
+        // This caches many calls for photos of a single pin,
+        // so all of them get responded when the single request finishes.
+        if var handlers = photosRequestHandlers[pin] {
+            // If there's already a request for this pin, simply append this completion handler.
+            handlers.append(handler)
+            photosRequestHandlers[pin] = handlers
 
-            self.dataController.persistentContainer.performBackgroundTask { context in
-                guard let pinInBackgroundContext = context.object(with: pinObjectID) as? PinMO else {
-                    preconditionFailure("Pin must be correctly fetched in bg context.")
+        } else {
+            // Otherwise, add the first handler for this pin, and start the request.
+            photosRequestHandlers[pin] = [handler]
+            requestImages(relatedToPin: pin) { flickrResponseData, taskError in
+                // Retrieve the callbacks to be invoked.
+                let handlers = self.photosRequestHandlers[pin]!
+
+                // Clear the handlers for a next request for this pin photos.
+                self.photosRequestHandlers[pin] = nil
+
+                guard taskError == nil, let flickrResponseData = flickrResponseData else {
+                    handlers.forEach { $0(nil, taskError!) }
+                    return
                 }
 
-                do {
-                    try self.albumStore.addPhotos(fromFlickrImages: flickrResponseData.data.photos,
-                                                  toAlbum: pinInBackgroundContext.album!)
-                    handler(pin, nil)
-                } catch {
-                    handler(nil, error)
+                self.dataController.persistentContainer.performBackgroundTask { context in
+                    guard let pinInBackgroundContext = context.object(with: pinObjectID) as? PinMO else {
+                        preconditionFailure("Pin must be correctly fetched in bg context.")
+                    }
+
+                    do {
+                        try self.albumStore.addPhotos(fromFlickrImages: flickrResponseData.data.photos,
+                                                      toAlbum: pinInBackgroundContext.album!)
+                        handlers.forEach { $0(pin, nil) }
+                    } catch {
+                        handlers.forEach { $0(nil, error) }
+                    }
                 }
             }
         }
