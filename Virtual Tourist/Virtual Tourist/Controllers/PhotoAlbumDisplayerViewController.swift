@@ -48,13 +48,14 @@ class PhotoAlbumDisplayerViewController: UIViewController {
         precondition(flickrService != nil)
         precondition(photosFetchedResultsController != nil)
 
-        configureFlowLayout()
-
         photosFetchedResultsController.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        configureFlowLayout()
+
         displayAlbum()
     }
 
