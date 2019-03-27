@@ -185,9 +185,9 @@
 				470CE5DC221237F6005E321F /* UIViewController+Constants.swift */,
 				470CE5DA221235B1005E321F /* SplashViewController.swift */,
 				470CE5CF2212297D005E321F /* MapViewController.swift */,
+				475839362246E08E0022AD07 /* PhotoAlbumManagerViewController.swift */,
 				470CE5D122122999005E321F /* PhotoAlbumDisplayerViewController.swift */,
 				475839342246D7DA0022AD07 /* DetailsMapViewController.swift */,
-				475839362246E08E0022AD07 /* PhotoAlbumManagerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

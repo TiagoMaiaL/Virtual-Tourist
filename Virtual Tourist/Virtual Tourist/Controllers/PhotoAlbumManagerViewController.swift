@@ -85,7 +85,12 @@ class PhotoAlbumManagerViewController: UIViewController {
         precondition(pin != nil)
         precondition(flickrService != nil)
 
-        title = pin.placeName
+        var placeName: String! = pin.placeName
+        if placeName == nil {
+            placeName = "Unknown"
+        }
+
+        title = placeName
 
         informationViewHeightConstraint.constant = 2 * (view.frame.height / 8)
 
