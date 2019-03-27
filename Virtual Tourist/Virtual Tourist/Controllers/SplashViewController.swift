@@ -56,10 +56,52 @@ class SplashViewController: UIViewController {
         if segue.identifier == SegueIdentifiers.ShowMap,
             let navigationController = segue.destination as? UINavigationController,
             let mapController = navigationController.visibleViewController as? MapViewController {
+
+            navigationController.modalPresentationStyle = .custom
+            navigationController.transitioningDelegate = self
+
             mapController.dataController = dataController
             mapController.pinStore = pinStore
             mapController.albumStore = albumStore
             mapController.flickrService = flickrService
+        }
+    }
+}
+
+extension SplashViewController: UIViewControllerTransitioningDelegate {
+
+    // MARK: UIViewControllerTransitioningDelegate Methods
+
+    public func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController
+        ) -> UIViewControllerAnimatedTransitioning? {
+        return self
+    }
+}
+
+extension SplashViewController: UIViewControllerAnimatedTransitioning {
+
+    // MARK: UIViewControllerAnimatedTransitioning Methods
+
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return 0.5
+    }
+
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let currentView = view!
+        let container = transitionContext.containerView
+        let toView = transitionContext.view(forKey: .to)!
+
+        let currentViewSnapshot = currentView.snapshotView(afterScreenUpdates: false)!
+        container.addSubview(toView)
+        container.addSubview(currentViewSnapshot)
+
+        UIView.animate(withDuration: 0.5, animations: {
+            currentViewSnapshot.alpha = 0
+        }) { completed in
+            transitionContext.completeTransition(completed)
         }
     }
 }

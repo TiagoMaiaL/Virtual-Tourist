@@ -50,6 +50,10 @@ class MapViewController: UIViewController {
                                    usingSelector: #selector(updateViewContext(fromNotification:)))
 
         mapView.delegate = self
+        mapView.setRegion(
+            MKCoordinateRegion(center: mapView.region.center,
+                               span: MKCoordinateSpan(latitudeDelta: 60, longitudeDelta: 40)
+        ), animated: false)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -208,7 +212,7 @@ private class PushMapDetailsAnimator: NSObject, UIViewControllerAnimatedTransiti
     // MARK: UIViewControllerAnimatedTransitioning Delegate methods
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.3
+        return 0.5
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -229,7 +233,7 @@ private class PushMapDetailsAnimator: NSObject, UIViewControllerAnimatedTransiti
         toView.alpha = 0
         containerView.addSubview(toView)
 
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             toView.alpha = 1
         }) { _ in
             transitionContext.completeTransition(true)
@@ -242,7 +246,7 @@ private class PopMapDetailsAnimator: NSObject, UIViewControllerAnimatedTransitio
     // MARK: UIViewControllerAnimatedTransitioning Delegate methods
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.3
+        return 0.5
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -262,7 +266,7 @@ private class PopMapDetailsAnimator: NSObject, UIViewControllerAnimatedTransitio
         toView.alpha = 0
         containerView.addSubview(toView)
 
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             toView.alpha = 1
         }) { _ in
             mapViewController.mapView.setRegion(
