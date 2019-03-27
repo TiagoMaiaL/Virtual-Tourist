@@ -18,17 +18,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aoF-LU-Oyr">
-                                <rect key="frame" x="157" y="323" width="61" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="content-globe-icon" translatesAutoresizingMaskIntoConstraints="NO" id="7mG-db-2IK">
+                                <rect key="frame" x="19" y="189" width="337.5" height="289"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="aoF-LU-Oyr" firstAttribute="centerX" secondItem="yQj-NC-ndd" secondAttribute="centerX" id="5KR-OQ-44u"/>
-                            <constraint firstItem="aoF-LU-Oyr" firstAttribute="centerY" secondItem="yQj-NC-ndd" secondAttribute="centerY" id="6tv-bh-eFj"/>
+                            <constraint firstItem="7mG-db-2IK" firstAttribute="centerX" secondItem="yQj-NC-ndd" secondAttribute="centerX" id="1d8-Pm-Bcl"/>
+                            <constraint firstItem="7mG-db-2IK" firstAttribute="centerY" secondItem="yQj-NC-ndd" secondAttribute="centerY" id="UFg-3o-5Is"/>
+                            <constraint firstItem="7mG-db-2IK" firstAttribute="width" secondItem="yQj-NC-ndd" secondAttribute="width" multiplier="0.9" id="bVJ-Od-Hhh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vg8-XW-Kjc"/>
                     </view>
@@ -83,7 +81,6 @@
         <!--Album-->
         <scene sceneID="qBP-tk-T9l">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Cvt-45-5MC" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="6Ik-yZ-Kyv" customClass="PhotoAlbumDisplayerViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TFu-jk-X5m">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
@@ -200,6 +197,7 @@
                         <outlet property="collectionView" destination="Z9M-Pa-1ZZ" id="x1s-is-sBa"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cvt-45-5MC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2486" y="27"/>
         </scene>
@@ -337,6 +335,7 @@
                             <constraint firstItem="9zc-FB-bhx" firstAttribute="top" secondItem="zEr-g6-NHQ" secondAttribute="top" id="gnq-a6-g2k"/>
                             <constraint firstItem="9zc-FB-bhx" firstAttribute="leading" secondItem="zEr-g6-NHQ" secondAttribute="leading" id="wPZ-5b-vSW"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="QbR-rX-NSv"/>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="9zc-FB-bhx" id="pKW-QK-1Ut"/>
@@ -347,4 +346,7 @@
             <point key="canvasLocation" x="3290" y="27"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="content-globe-icon" width="276" height="289"/>
+    </resources>
 </document>
