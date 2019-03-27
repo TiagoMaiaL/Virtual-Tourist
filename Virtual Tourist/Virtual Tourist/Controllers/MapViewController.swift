@@ -44,6 +44,8 @@ class MapViewController: UIViewController {
         precondition(albumStore != nil)
         precondition(flickrService != nil)
 
+        configureNavigationController()
+
         startObservingNotification(withName: .NSManagedObjectContextDidSave,
                                    usingSelector: #selector(updateViewContext(fromNotification:)))
 
@@ -117,16 +119,16 @@ class MapViewController: UIViewController {
 
                     self.flickrService.populatePinWithPhotosFromFlickr(createdPin) { createdPin, error in
                         guard error == nil, createdPin != nil else {
-                            // TODO: Display request failure to user.
-                            print("Error while trying to request and save the images of the album")
+                            /* Fail silently when in the map controller. */
                             return
                         }
 
-                        print("Finished adding photos to album")
                     }
 
                     self.display(createdPin: createdPin)
-                } catch { /* Fail silently when in the map controller. */ }
+                } catch {
+                    // TODO: Alert the user of the error.
+                }
             }
         }
     }
@@ -157,6 +159,12 @@ class MapViewController: UIViewController {
     private func display(createdPin pin: PinMO) {
         mapView.addAnnotation(PinAnnotation(pin: pin))
     }
+
+    /// Configures the navigation controller to set up the delegate and other attributes.
+    private func configureNavigationController() {
+        navigationController?.delegate = self
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -169,5 +177,100 @@ extension MapViewController: MKMapViewDelegate {
         }
 
         performSegue(withIdentifier: SegueIdentifiers.ShowPhotoAlbumManager, sender: self)
+    }
+}
+
+extension MapViewController: UINavigationControllerDelegate {
+
+    // MARK: Navigation controller delegate methods
+
+    func navigationController(
+        _ navigationController: UINavigationController,
+        animationControllerFor operation: UINavigationController.Operation,
+        from fromVC: UIViewController,
+        to toVC: UIViewController
+        ) -> UIViewControllerAnimatedTransitioning? {
+        switch operation {
+        case .push:
+            return PushMapDetailsAnimator()
+
+        case .pop:
+            return PopMapDetailsAnimator()
+
+        default:
+            return nil
+        }
+    }
+}
+
+private class PushMapDetailsAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+
+    // MARK: UIViewControllerAnimatedTransitioning Delegate methods
+
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return 0.3
+    }
+
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let containerView = transitionContext.containerView
+        let toView = transitionContext.view(forKey: .to)!
+
+        // Configure the details map to have the same position as the map listing the pins.
+        guard let currentMapController = transitionContext.viewController(forKey: .from) as? MapViewController else {
+            preconditionFailure("The from controller must be a map controller.")
+        }
+        let mapRegion = currentMapController.mapView.region
+
+        guard let detailsViewController = transitionContext.viewController(forKey: .to) as? PhotoAlbumManagerViewController else {
+            preconditionFailure("The from controller must be a album manager controller.")
+        }
+        detailsViewController.albumDisplayerController.detailsMapController.mapView.setRegion(mapRegion, animated: false)
+
+        toView.alpha = 0
+        containerView.addSubview(toView)
+
+        UIView.animate(withDuration: 0.3, animations: {
+            toView.alpha = 1
+        }) { _ in
+            transitionContext.completeTransition(true)
+        }
+    }
+}
+
+private class PopMapDetailsAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+
+    // MARK: UIViewControllerAnimatedTransitioning Delegate methods
+
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return 0.3
+    }
+
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let containerView = transitionContext.containerView
+        let toView = transitionContext.view(forKey: .to)!
+
+        guard let currentDetailsViewController = transitionContext.viewController(forKey: .from) as? PhotoAlbumManagerViewController else {
+            preconditionFailure("The from controller must be an album manager controller.")
+        }
+        let detailsMapRegion = currentDetailsViewController.albumDisplayerController.detailsMapController.mapView.region
+
+        guard let mapViewController = transitionContext.viewController(forKey: .to) as? MapViewController else {
+            preconditionFailure("The from controller must be a map view controller.")
+        }
+        mapViewController.mapView.setRegion(detailsMapRegion, animated: false)
+
+        toView.alpha = 0
+        containerView.addSubview(toView)
+
+        UIView.animate(withDuration: 0.3, animations: {
+            toView.alpha = 1
+        }) { _ in
+            mapViewController.mapView.setRegion(
+                MKCoordinateRegion(center: detailsMapRegion.center,
+                                   span: MKCoordinateSpan(latitudeDelta: 60, longitudeDelta: 40)),
+                animated: true
+            )
+            transitionContext.completeTransition(true)
+        }
     }
 }

@@ -35,7 +35,7 @@ class PhotoAlbumManagerViewController: UIViewController {
     var flickrService: FlickrServiceProtocol!
 
     /// The contained album display controller.
-    private var albumDisplayerController: PhotoAlbumDisplayerViewController!
+    var albumDisplayerController: PhotoAlbumDisplayerViewController!
 
     /// The current view controller state.
     private var viewState = State.displayingAlbumm {

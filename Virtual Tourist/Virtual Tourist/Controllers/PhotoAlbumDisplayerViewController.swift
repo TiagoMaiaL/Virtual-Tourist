@@ -36,6 +36,9 @@ class PhotoAlbumDisplayerViewController: UIViewController {
     /// The top inset of the collection view, so it displays map view when in the top.
     var mapTopInset: CGFloat!
 
+    /// The map controller displaying the current pin.
+    var detailsMapController: DetailsMapViewController!
+
     // MARK: Life cycle
 
     override func viewDidLoad() {
@@ -63,6 +66,8 @@ class PhotoAlbumDisplayerViewController: UIViewController {
                 preconditionFailure("There must be a details map controller.")
             }
             detailsMapController.pin = pin
+
+            self.detailsMapController = detailsMapController
         }
     }
 

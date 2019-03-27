@@ -31,6 +31,12 @@ class DetailsMapViewController: UIViewController {
         mapView.addAnnotation(PinAnnotation(pin: pin))
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        mapView.selectAnnotation(mapView.annotations.first!, animated: false)
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
