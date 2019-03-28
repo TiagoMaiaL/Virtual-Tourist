@@ -17,16 +17,16 @@ extension CLPlacemark {
     var placeName: String? {
         var placeName = ""
 
-        if let administrativeArea = administrativeArea {
+        if let administrativeArea = administrativeArea, !administrativeArea.isEmpty {
             placeName = administrativeArea
         }
 
-        if let locality = locality {
-            placeName += ", \(locality)"
+        if let locality = locality, !locality.isEmpty {
+            placeName = (placeName.isEmpty ? "" : ", ") + locality
         }
 
-        if let name = name {
-            placeName += ", \(name)"
+        if let name = name, !name.isEmpty {
+            placeName = (placeName.isEmpty ? "" : ", ") + name
         }
 
         return placeName.isEmpty ? nil : placeName
