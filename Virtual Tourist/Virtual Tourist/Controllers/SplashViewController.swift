@@ -41,7 +41,7 @@ class SplashViewController: UIViewController {
 
         dataController.load { storeDescription, error in
             guard error == nil else {
-                print("\(error!)")
+                debugPrint("An error occurred - \(error!)")
                 // TODO: Display an error to the user.
                 return
             }

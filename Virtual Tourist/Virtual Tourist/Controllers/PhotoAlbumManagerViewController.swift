@@ -102,7 +102,6 @@ class PhotoAlbumManagerViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        print("On album with images status: \(pin.album!.hasImages)")
         // Request photos if necessary.
         if !pin.album!.hasImages {
             populatePinWithPhotos(pin)

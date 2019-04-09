@@ -164,7 +164,7 @@ extension PhotoAlbumDisplayerViewController: UICollectionViewDataSource, UIColle
                 guard error == nil, let image = image else {
                     // TODO: Display the failure in the cell?
                     // TODO: Find a way to display this error to the user.
-                    print("Error loading image...")
+                    debugPrint("An error happened while loading the image: \(error!)")
                     return
                 }
 
